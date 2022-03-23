@@ -1,2 +1,0 @@
-# radio-runners
-mobile project
