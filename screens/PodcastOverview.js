@@ -4,7 +4,7 @@ import * as rssParser from 'react-native-rss-parser';
 import { db, ROOT_REF } from '../firebase/Config';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-native-paper';
-import { registerRootComponent } from 'expo';
+//import { registerRootComponent } from 'expo';
 import styles from '../style/Style';
 import theme from '../style/Theme';
 
@@ -68,4 +68,4 @@ export default function App() {
     );
   }
 
-  registerRootComponent(App);
+  //registerRootComponent(App);
