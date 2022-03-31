@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import * as rssParser from 'react-native-rss-parser';
 import { db, ROOT_REF } from '../firebase/Config';
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-native-paper';
+//import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-native-paper';
 //import { registerRootComponent } from 'expo';
 import styles from '../style/Style';
 import theme from '../style/Theme';
