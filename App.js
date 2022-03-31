@@ -1,5 +1,8 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native'
+//import styles from './styles/Style';
+//import theme from './styles/Theme';
+import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons'
 import { Audio } from 'expo-av'
 
