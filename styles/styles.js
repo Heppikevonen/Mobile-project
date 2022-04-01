@@ -11,10 +11,16 @@ export default StyleSheet.create({
   tinyLogo: {
     width: 150, 
     height: 150,
+	marginBottom: 6,
+	
+	
+
   },
-  headline: {
-    fontSize: 20, 
+  podcastHeadline: {
+    fontSize: 16, 
     fontWeight: 'bold',
+	width: 150,
+	marginBottom: 24,
   },
   flex: {
     flexDirection: "row", 
