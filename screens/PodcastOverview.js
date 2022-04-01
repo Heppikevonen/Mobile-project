@@ -8,6 +8,12 @@ import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-na
 import styles from '../styles/styles';
 import theme from '../styles/Theme';
 
+// db.ref(ROOT_REF).push({
+//   link: "https://feeds.npr.org/510298/podcast.xml",
+//   category: ['personal development', 'sports'],
+
+// })
+
 
 export default function PodcastOverview() {
     const { colors } = useTheme(theme);
@@ -15,6 +21,8 @@ export default function PodcastOverview() {
     const [title, setTitle] = useState([]);
     const [category, setCategory] = useState([]);
     const [imageURL, setImageURL] = useState([]);
+
+    
     
     useEffect(() => {
       db.ref(ROOT_REF).on('value', querySnapShot => {
@@ -22,6 +30,8 @@ export default function PodcastOverview() {
         let data = { ...dataTemp };
         setData(data);
         //console.log(data);
+
+        
   
         for (let i = 0; i < Object.values(data).length; i++) {
           //console.log(Object.values(data)[i].link);
@@ -46,6 +56,8 @@ export default function PodcastOverview() {
       });
     }, []);
 
+    
+
     const keysArrays = Object.keys(title).reduce(function (rows, key, index) { 
       return (index % 2 == 0 ? rows.push([key]) 
         : rows[rows.length-1].push(key)) && rows;
@@ -59,17 +71,19 @@ export default function PodcastOverview() {
     <PaperProvider theme={theme}>
       <View style={styles.container}>  
         <ScrollView >
+          
           {titleKey.length > 0 ? (
             keysArrays.map(row => (
               <Row key={row} id={row}>
                 {row.map(col => (
                 <Col key={col} id={col}>
                   <Image style={styles.tinyLogo} source={{uri: `${imageURL[col]}`}}></Image>
-                  <Text style={[styles.podcastHeadline, { color: colors.accent }]} numberOfLines={3}> {title[col].substring(0)}</Text>
+                  <Text style={[styles.podcastHeadline, { color: colors.accent }]} numberOfLines={3}> {title[col]}</Text>
                   {/* <Text style={[styles.headline, { color: colors.primary }]}>{category[col]}</Text> */}
                 </Col>
                 ))}                
-              </Row>    
+              </Row>   
+             
               
               
               // <Grid >
