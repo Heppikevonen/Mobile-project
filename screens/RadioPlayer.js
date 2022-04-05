@@ -1,38 +1,54 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, View, Image, Text } from 'react-native';
+import React, { Component, useState } from 'react';
+import { TouchableOpacity, View, Image, Text, Dimensions } from 'react-native';
+//import { Asset } from "expo-asset";
 import styles from '../styles/styles';
 //import theme from './styles/Theme';
 //import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-native-paper';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
+//import { useFonts } from 'expo-font';;
+
+
+//const {width, height} = Dimensions.get('window');
+
+
+class PlaylistItem {
+	constructor(name, uri, image) {
+	  this.name = name;
+	  this.uri = uri;
+	  this.image = image;
+	}
+}
 
 const runnerRadioPlaylist = [
-	{
-		title: 'Add Title',
-		author: 'Add Author',
-		uri:
-			'https://mediandr-a.akamaihd.net/download/podcasts/podcast4684/AU-20220329-1639-3100.mp3',
-		imageSource: 'https://www.ndr.de/mediathek/podcast4798_v-quadratxl.jpg'
-	},
-    {
-        title: 'Add Title',
-        author: 'Add Author',
-        uri:
-          'https://firebasestorage.googleapis.com/v0/b/testi-f9856.appspot.com/o/naytappa.mp3?alt=media&token=78f8faed-f1c6-4083-8462-85f892cbee5c',
-        imageSource: 'https://firebasestorage.googleapis.com/v0/b/testi-f9856.appspot.com/o/Screenshot%202022-03-30%20000803.png?alt=media&token=ca9bb44b-2b14-411b-9eed-b5fab259b5c8'
-      }
-      //**rt it only works forwads not backwards */
+	new PlaylistItem(
+		"Comfort Fit - “Sorry”",
+		"https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Comfort_Fit_-_03_-_Sorry.mp3",
+		"https://www.ndr.de/mediathek/podcast4798_v-quadratxl.jpg"
+
+		
+	  ),
+	  new PlaylistItem(
+		"Big Buck Bunny",
+		"http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+		"https://firebasestorage.googleapis.com/v0/b/testi-f9856.appspot.com/o/Screenshot%202022-03-30%20000803.png?alt=media&token=ca9bb44b-2b14-411b-9eed-b5fab259b5c8"
+		
+	  ),
 
     //   {
     //     title: 'add smt',
     //     author: 'add smt',
     //     uri:
-    //       'any link you want',
-    //     imageSource: 'any link you want'
+    //       '',
+    //     imageSource: ''
     //   }
 ]
 
-export default class RadioPlayer extends React.Component {
+
+
+
+export default class RadioPlayer extends Component {
 	state = {
 		isPlaying: false,
 		playbackInstance: null,
@@ -40,6 +56,7 @@ export default class RadioPlayer extends React.Component {
 		volume: 1.0,
 		isBuffering: true
 	}
+
 
 	async componentDidMount() {
 		try {
@@ -136,6 +153,7 @@ export default class RadioPlayer extends React.Component {
 		) : null
 	}
 
+
 	render() {
 		return (
 			<View style={styles.containerRadio}>
@@ -143,6 +161,15 @@ export default class RadioPlayer extends React.Component {
 					style={styles.radioCover}
 					source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/testi-f9856.appspot.com/o/Screenshot%202022-03-30%20000803.png?alt=media&token=ca9bb44b-2b14-411b-9eed-b5fab259b5c8' }}
 				/>
+				<View>
+				<Slider
+  					style={styles.progressBar}
+  					minimumValue={0}
+ 					maximumValue={1}
+  					minimumTrackTintColor="#FFFFFF"
+  					maximumTrackTintColor="#000000"
+				/>
+				</View>
 				<View style={styles.controls}>
 					<TouchableOpacity style={styles.control} onPress={this.handlePreviousTrack}>
 						<Ionicons name="arrow-back-circle-outline" size={48} color='#444' />
@@ -157,7 +184,10 @@ export default class RadioPlayer extends React.Component {
 					<TouchableOpacity style={styles.control} onPress={this.handleNextTrack}>
 						<Ionicons name="arrow-forward-circle-outline" size={48} color='#444' />
 					</TouchableOpacity>
+			
+				
 				</View>
+				
 				{this.renderFileInfo()}
 			</View>
 		)

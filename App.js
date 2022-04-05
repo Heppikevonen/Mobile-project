@@ -1,9 +1,10 @@
-import RadioPlayer from './screens/RadioPlayer'
-import PodcastOverview from './screens/PodcastOverview'
+import { NavigationContainer } from '@react-navigation/native'
+import AppNavigator from './navigation/AppNavigator'
 
 export default function App() {
   return (
-	  //<RadioPlayer />
-    <PodcastOverview />
+	  <NavigationContainer>
+      <AppNavigator />
+    </NavigationContainer>
   )
 }
