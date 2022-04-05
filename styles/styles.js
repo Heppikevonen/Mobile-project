@@ -5,6 +5,8 @@ export default StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
     flex: 1,
+	//alignItems: 'center',
+	//justifyContent: 'center',
     marginLeft: 16,
     marginRight: 16,
   },
@@ -21,6 +23,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
 	width: 150,
 	marginBottom: 24,
+	
   },
   flex: {
     flexDirection: "row", 
