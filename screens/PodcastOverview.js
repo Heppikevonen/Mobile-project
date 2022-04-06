@@ -8,11 +8,11 @@ import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-na
 import styles from '../styles/styles';
 import theme from '../styles/Theme';
 
-// db.ref(ROOT_REF).push({
-//   link: "https://feeds.npr.org/510298/podcast.xml",
-//   category: ['personal development', 'sports'],
+db.ref(ROOT_REF).push({
+  link: "https://feeds.npr.org/510298/podcast.xml",
+  category: ['personal development', 'sports'],
 
-// })
+})
 
 
 export default function PodcastOverview() {
