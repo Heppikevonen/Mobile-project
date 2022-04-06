@@ -1,195 +1,386 @@
-import React, { Component, useState } from 'react';
-import { TouchableOpacity, View, Image, Text, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import { TouchableOpacity, View, Image, Text } from 'react-native';
 //import { Asset } from "expo-asset";
-import styles from '../styles/styles';
 //import theme from './styles/Theme';
 //import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-native-paper';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
-//import { useFonts } from 'expo-font';;
-
-
-//const {width, height} = Dimensions.get('window');
-
-
-class PlaylistItem {
-	constructor(name, uri, image) {
-	  this.name = name;
-	  this.uri = uri;
-	  this.image = image;
-	}
-}
-
-const runnerRadioPlaylist = [
-	new PlaylistItem(
-		"Comfort Fit - “Sorry”",
-		"https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Comfort_Fit_-_03_-_Sorry.mp3",
-		"https://www.ndr.de/mediathek/podcast4798_v-quadratxl.jpg"
-
-		
-	  ),
-	  new PlaylistItem(
-		"Big Buck Bunny",
-		"http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-		"https://firebasestorage.googleapis.com/v0/b/testi-f9856.appspot.com/o/Screenshot%202022-03-30%20000803.png?alt=media&token=ca9bb44b-2b14-411b-9eed-b5fab259b5c8"
-		
-	  ),
-
-    //   {
-    //     title: 'add smt',
-    //     author: 'add smt',
-    //     uri:
-    //       '',
-    //     imageSource: ''
-    //   }
-]
+import * as Font from 'expo-font';
+import { PodcastPlaylist } from '../constants/PodcastPlaylist';
+import styles from '../styles/styles';
 
 
 
+const DISABLED_OPACITY = 0.5;
 
-export default class RadioPlayer extends Component {
-	state = {
-		isPlaying: false,
-		playbackInstance: null,
-		currentIndex: 0,
-		volume: 1.0,
-		isBuffering: true
+
+class RadioPlayer extends Component {
+	constructor(props) {
+		super(props);
+		this.index = 0;
+		this.isSeeking = false;
+		this.shouldPlayAtEndOfSeek = false;
+		this.playbackInstance = null;
+		this.state = {
+			playbackInstanceTitle: null,
+			playbackInstanceAuthor: null,
+			playbackInstancePosition: null,
+			playbackInstanceDuration: null,
+			shouldPlay: false,
+			isPlaying: false,
+			isBuffering: false,
+			isLoading: true,
+			fontLoaded: false,
+			volume: 1.0,
+			rate: 1.0,
+			portrait: null,
+		};
 	}
 
 
 	async componentDidMount() {
-		try {
-			await Audio.setAudioModeAsync({
-				allowsRecordingIOS: false,
-				interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-				playsInSilentModeIOS: true,
-				interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-				shouldDuckAndroid: true,
-				staysActiveInBackground: true,
-				playThroughEarpieceAndroid: true
-			})
+		await Audio.setAudioModeAsync({
+			allowsRecordingIOS: false,
+			interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+			playsInSilentModeIOS: true,
+			interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+			shouldDuckAndroid: true,
+			staysActiveInBackground: true,
+			playThroughEarpieceAndroid: false
+		});
+		(async () => {
+			await Font.loadAsync({
+				spaceMono: require('../assets/fonts/Roboto-Regular.ttf'),
+				});
+			this.setState({ fontLoaded: true });
+		})();
 
-			this.loadAudio()
-		} catch (e) {
-			console.log(e)
+		this._loadNewPlaybackInstance(false);
+	}
+
+	componentWillUnmount() {
+		this.playbackInstance.unloadAsync();
+		console.log('unmount');
+	}
+
+	async _loadNewPlaybackInstance(playing) {
+		if (this.playbackInstance != null) {
+			await this.playbackInstance.unloadAsync();
+			this.playbackInstance.setOnPlaybackStatusUpdate(null);
+			this.playbackInstance = null;
+		}
+
+		const source = { uri: PodcastPlaylist[this.index].uri };
+		const initialStatus = {
+			shouldPlay: playing,
+			rate: this.state.rate,
+			volume: this.state.volume,
+		};
+
+		const { sound, status } = await Audio.Sound.createAsync(
+			source,
+			initialStatus,
+			this._onPlaybackStatusUpdate
+		);
+		this.playbackInstance = sound;
+
+		this._updateScreenForLoading(false);
+	}
+
+	_updateScreenForLoading(isLoading) {
+		if (isLoading) {
+			this.setState({
+				isPlaying: false,
+				playbackInstanceTitle: null,
+				playbackInstanceAuthor: null,
+				playbackInstanceDuration: null,
+				playbackInstancePosition: null,
+				isLoading: true,
+			});
+		} else {
+			this.setState({
+				playbackInstanceTitle: PodcastPlaylist[this.index].title,
+				playbackInstanceAuthor: PodcastPlaylist[this.index].author,
+				portrait: PodcastPlaylist[this.index].imageSource,
+				isLoading: false,
+			});
 		}
 	}
 
-	async loadAudio() {
-		const { currentIndex, isPlaying, volume } = this.state
-
-		try {
-			const playbackInstance = new Audio.Sound()
-			const source = {
-				uri: runnerRadioPlaylist[currentIndex].uri
+	_onPlaybackStatusUpdate = status => {
+		if (status.isLoaded) {
+			this.setState({
+				playbackInstancePosition: status.positionMillis,
+				playbackInstanceDuration: status.durationMillis,
+				shouldPlay: status.shouldPlay,
+				isPlaying: status.isPlaying,
+				isBuffering: status.isBuffering,
+				rate: status.rate,
+				volume: status.volume,
+			});
+			if (status.didJustFinish) {
+				this._advanceIndex(true);
+				this._updatePlaybackInstanceForIndex(true);
 			}
-
-			const status = {
-				shouldPlay: isPlaying,
-				volume: volume
+		} else {
+			if (status.error) {
+				console.log(`FATAL PLAYER ERROR: ${status.error}`);
 			}
-
-			playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate)
-			await playbackInstance.loadAsync(source, status, false)
-			this.setState({
-				playbackInstance
-			})
-		} catch (e) {
-			console.log(e)
 		}
+	};
+
+	_advanceIndex(forward) {
+		this.index =
+			(this.index + (forward ? 1 : PodcastPlaylist.length - 1)) %
+			PodcastPlaylist.length;
 	}
 
-	onPlaybackStatusUpdate = status => {
-		this.setState({
-			isBuffering: status.isBuffering
-		})
+	async _updatePlaybackInstanceForIndex(playing) {
+		this._updateScreenForLoading(true);
+
+		this._loadNewPlaybackInstance(playing);
 	}
 
-	handlePlayPause = async () => {
-		const { isPlaying, playbackInstance } = this.state
-		isPlaying ? await playbackInstance.pauseAsync() : await playbackInstance.playAsync()
-
-		this.setState({
-			isPlaying: !isPlaying
-		})
-	}
-
-	handlePreviousTrack = async () => {
-		let { playbackInstance, currentIndex } = this.state
-		if (playbackInstance) {
-			await playbackInstance.unloadAsync()
-			currentIndex < runnerRadioPlaylist.length - 1 ? (currentIndex -= 1) : (currentIndex = 0)
-			this.setState({
-				currentIndex
-			})
-			this.loadAudio()
+	_onPlayPausePressed = () => {
+		if (this.playbackInstance != null) {
+			if (this.state.isPlaying) {
+				this.playbackInstance.pauseAsync();
+			} else {
+				this.playbackInstance.playAsync();
+			}
 		}
-	}
+	};
 
-	handleNextTrack = async () => {
-		let { playbackInstance, currentIndex } = this.state
-		if (playbackInstance) {
-			await playbackInstance.unloadAsync()
-			currentIndex < runnerRadioPlaylist.length - 1 ? (currentIndex += 1) : (currentIndex = 0)
-			this.setState({
-				currentIndex
-			})
-			this.loadAudio()
+	_onStopPressed = () => {
+		if (this.playbackInstance != null) {
+			this.playbackInstance.stopAsync();
 		}
+	};
+
+	_onForwardPressed = () => {
+		if (this.playbackInstance != null) {
+			this._advanceIndex(true);
+			this._updatePlaybackInstanceForIndex(this.state.shouldPlay);
+		}
+	};
+
+	_onBackPressed = () => {
+		if (this.playbackInstance != null) {
+			this._advanceIndex(false);
+			this._updatePlaybackInstanceForIndex(this.state.shouldPlay);
+		}
+	};
+
+
+
+
+	_onSeekSliderValueChange = value => {
+		if (this.playbackInstance != null && !this.isSeeking) {
+			this.isSeeking = true;
+			this.shouldPlayAtEndOfSeek = this.state.shouldPlay;
+			this.playbackInstance.pauseAsync();
+		}
+	};
+
+	_onSeekSliderSlidingComplete = async value => {
+		if (this.playbackInstance != null) {
+			this.isSeeking = false;
+			const seekPosition = value * this.state.playbackInstanceDuration;
+			if (this.shouldPlayAtEndOfSeek) {
+				this.playbackInstance.playFromPositionAsync(seekPosition);
+			} else {
+				this.playbackInstance.setPositionAsync(seekPosition);
+			}
+		}
+	};
+
+	_getSeekSliderPosition() {
+		if (
+			this.playbackInstance != null &&
+			this.state.playbackInstancePosition != null &&
+			this.state.playbackInstanceDuration != null
+		) {
+			return (
+				this.state.playbackInstancePosition /
+				this.state.playbackInstanceDuration
+			);
+		}
+		return 0;
 	}
 
-	renderFileInfo() {
-		const { playbackInstance, currentIndex } = this.state
-		return playbackInstance ? (
-			<View style={styles.trackInfo}>
-				<Text style={[styles.trackInfoText, styles.largeText]}>
-					{runnerRadioPlaylist[currentIndex].title}
-				</Text>
-				<Text style={[styles.trackInfoText, styles.smallText]}>
-					{runnerRadioPlaylist[currentIndex].author}
-				</Text>
-			</View>
-		) : null
+	_getMMSSFromMillis(millis) {
+		const totalSeconds = millis / 1000;
+		const seconds = Math.floor(totalSeconds % 60);
+		const minutes = Math.floor(totalSeconds / 60);
+
+		const padWithZero = number => {
+			const string = number.toString();
+			if (number < 10) {
+				return '0' + string;
+			}
+			return string;
+		};
+		return padWithZero(minutes) + ':' + padWithZero(seconds);
 	}
 
+	_getTimestamp() {
+		if (
+			this.playbackInstance != null &&
+			this.state.playbackInstancePosition != null &&
+			this.state.playbackInstanceDuration != null
+		) {
+			return `${this._getMMSSFromMillis(
+				this.state.playbackInstancePosition
+			)} / ${this._getMMSSFromMillis(
+				this.state.playbackInstanceDuration
+			)}`;
+		}
+		return '';
+	}
 
 	render() {
-		return (
-			<View style={styles.containerRadio}>
-				<Image
-					style={styles.radioCover}
-					source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/testi-f9856.appspot.com/o/Screenshot%202022-03-30%20000803.png?alt=media&token=ca9bb44b-2b14-411b-9eed-b5fab259b5c8' }}
-				/>
-				<View>
-				<Slider
-  					style={styles.progressBar}
-  					minimumValue={0}
- 					maximumValue={1}
-  					minimumTrackTintColor="#FFFFFF"
-  					maximumTrackTintColor="#000000"
-				/>
+		return !this.state.fontLoaded ? (
+			<View />
+		) : (
+			<View style={styles.containerPlayer}>
+				<View style={styles.portraitContainer}>
+					<Image
+						style={styles.portrait}
+						source={{
+							uri: this.state.portrait,
+						}}
+					/>
 				</View>
-				<View style={styles.controls}>
-					<TouchableOpacity style={styles.control} onPress={this.handlePreviousTrack}>
-						<Ionicons name="arrow-back-circle-outline" size={48} color='#444' />
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.control} onPress={this.handlePlayPause}>
-						{this.state.isPlaying ? (
-							<Ionicons name="pause-circle-outline" size={48} color='#444' />
-						) : (
-							<Ionicons name="play-circle-outline" size={48} color='#444' />
-						)}
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.control} onPress={this.handleNextTrack}>
-						<Ionicons name="arrow-forward-circle-outline" size={48} color='#444' />
-					</TouchableOpacity>
-			
-				
+				<View style={styles.detailsContainer}>
+					<Text style={[styles.text]}>
+						{this.state.playbackInstanceTitle}
+					</Text>
+					<Text style={[styles.text]}>
+						{this.state.playbackInstanceAuthor}
+					</Text>
+					<Text style={[styles.text]}>
+						{this._getTimestamp()}
+					</Text>
 				</View>
-				
-				{this.renderFileInfo()}
+				<View
+					style={[
+						styles.buttonsContainerBase,
+						styles.buttonsContainerTopRow,
+						{
+							opacity: this.state.isLoading
+								? DISABLED_OPACITY
+								: 1.0,
+						},
+					]}
+				>
+					<TouchableOpacity
+						underlayColor={'#4cf9e8'}
+						style={styles.wrapper}
+						onPress={this._onBackPressed}
+						disabled={this.state.isLoading}
+					>
+						<View>
+							<MaterialIcons
+								name="fast-rewind"
+								size={40}
+								color="#ffffff"
+							/>
+						</View>
+					</TouchableOpacity>
+					<TouchableOpacity
+						underlayColor={'#4cf9e8'}
+						style={styles.wrapper}
+						onPress={this._onPlayPausePressed}
+						disabled={this.state.isLoading}
+					>
+						<View>
+							{this.state.isPlaying ? (
+								<MaterialIcons
+									name="pause"
+									size={40}
+									color="#ffffff"
+								/>
+							) : (
+								<MaterialIcons
+									name="play-arrow"
+									size={40}
+									color="#ffffff"
+								/>
+							)}
+						</View>
+					</TouchableOpacity>
+					<TouchableOpacity
+						underlayColor={'#4cf9e8'}
+						style={styles.wrapper}
+						onPress={this._onStopPressed}
+						disabled={this.state.isLoading}
+					>
+						<View>
+							<MaterialIcons
+								name="stop"
+								size={40}
+								color="#ffffff"
+							/>
+						</View>
+					</TouchableOpacity>
+					<TouchableOpacity
+						underlayColor={'#4cf9e8'}
+						style={styles.wrapper}
+						onPress={this._onForwardPressed}
+						disabled={this.state.isLoading}
+					>
+						<View>
+							<MaterialIcons
+								name="fast-forward"
+								size={40}
+								color="#ffffff"
+							/>
+						</View>
+					</TouchableOpacity>
+				</View>
+				<View
+					style={[
+						styles.playbackContainer,
+						{
+							opacity: this.state.isLoading
+								? DISABLED_OPACITY
+								: 1.0,
+						},
+					]}
+				>
+					<Slider
+						style={styles.playbackSlider}
+						value={this._getSeekSliderPosition()}
+						onValueChange={this._onSeekSliderValueChange}
+						onSlidingComplete={this._onSeekSliderSlidingComplete}
+						thumbStyle={ styles.sliderThumb }
+						trackStyle={ styles.sliderTrack }
+						minimumTrackTintColor="#4CCFF9"
+						disabled={this.state.isLoading}
+					/>
+				</View>
+				<View
+					style={[
+						styles.buttonsContainerBase,
+						styles.buttonsContainerMiddleRow,
+					]}
+				>
+					
+				</View>
+				<View
+					style={[
+						styles.buttonsContainerBase,
+						styles.buttonsContainerBottomRow,
+					]}
+				>
+					
+					
+					
+				</View>
 			</View>
-		)
+		);
 	}
 }
+
+export default RadioPlayer;
