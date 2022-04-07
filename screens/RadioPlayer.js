@@ -12,6 +12,7 @@ import styles from '../styles/styles';
 
 
 
+
 const DISABLED_OPACITY = 0.5;
 
 
@@ -248,7 +249,7 @@ class RadioPlayer extends Component {
 					<Image
 						style={styles.portrait}
 						source={{
-							uri: this.state.portrait,
+						uri: this.state.portrait,
 						}}
 					/>
 				</View>
@@ -324,6 +325,7 @@ class RadioPlayer extends Component {
 							/>
 						</View>
 					</TouchableOpacity>
+					
 					<TouchableOpacity
 						underlayColor={'#4cf9e8'}
 						style={styles.wrapper}
@@ -360,24 +362,7 @@ class RadioPlayer extends Component {
 						disabled={this.state.isLoading}
 					/>
 				</View>
-				<View
-					style={[
-						styles.buttonsContainerBase,
-						styles.buttonsContainerMiddleRow,
-					]}
-				>
-					
-				</View>
-				<View
-					style={[
-						styles.buttonsContainerBase,
-						styles.buttonsContainerBottomRow,
-					]}
-				>
-					
-					
-					
-				</View>
+				
 			</View>
 		);
 	}
