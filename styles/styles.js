@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions, StatusBar, Platform } from 'react-native'
 import Constants from 'expo-constants'
 
+
 export default StyleSheet.create({
   container: {
     // paddingTop: Constants.statusBarHeight,
@@ -26,21 +27,25 @@ export default StyleSheet.create({
   
   containerPlayer: {
 		flex: 1,
-		flexDirection: 'column',
+		//flexDirection: 'column',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		alignSelf: 'stretch',
-		backgroundColor: '#f94c94',
+		//alignSelf: 'stretch',
+		backgroundColor: 'white',
 	},
-	portraitContainer: {
-		marginTop: 0,
+	imageContainer: {
+		width: 300,
+    	height: 340,
+    	marginBottom: 25,
 	},
-	portrait: {
-		height: 300,
-		width: 450,
+	image: {
+		width: '100%',
+    	height: '100%',
+   		borderRadius: 15,
+	
 	},
 	detailsContainer: {
-		height: 150,
+		height: 130,
 		marginTop: 10,
 		alignItems: 'center',
 	},
@@ -55,51 +60,60 @@ export default StyleSheet.create({
 		alignSelf: 'stretch',
 		marginLeft: 10,
 		marginRight: 10,
+		
 	},
+	timeStamp: {
+		flex: 1,
+		width: '80%',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		
+	  },
+	  
 	text: {
 		fontSize: 16,
 		minHeight: 16,
 		marginBottom: 20,
 		justifyContent: 'center',
 		alignItems: 'center',
-		color: '#ffffff'
+		color: 'black',
+		fontWeight: 'bold'
 	},
 	sliderThumb: {
 		width: 12,
 		height: 12,
-		backgroundColor: '#f62976',
+		backgroundColor: '#EA5A00',
 		borderRadius: 10 / 2,
-		shadowColor: 'red',
+		
+	},
+	sliderTrack: {
+		height: 2,
+		
+		shadowColor: '#ccc',
 		shadowOffset: {
 			width: 0,
 			height: 0
 		},
-		shadowRadius: 2,
-		shadowOpacity: 1,
+		shadowRadius: 5,
+		shadowOpacity: 5,
 	},
-	sliderTrack: {
-		height: 2,
-		backgroundColor: '#D3D3D3',
-	},
-	buttonsContainerBase: {
-		flex: 1,
+	radioControlsContainer: {
 		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		marginTop: 10
+    	justifyContent: 'space-between',
+    	alignItems: 'center',
+    	marginTop: 15,
+   		width: '80%',
 	},
-	buttonsContainerTopRow: {
-		maxHeight: 40,
-	},
-	buttonsContainerMiddleRow: {
-		maxHeight: 40,
-		alignSelf: 'stretch',
-		paddingRight: 20,
+	bottomSection: {
+		borderTopColor: '#F4EEEA',
+    	borderWidth: 1,
+    	width: '100%',
+    	alignItems: 'center',
+    	paddingVertical: 15,
 	},
 	
-	buttonsContainerBottomRow: {
-		alignSelf: 'stretch',
-	},
+	
+	
   flex: {
     flexDirection: 'row',
     marginTop: 20,

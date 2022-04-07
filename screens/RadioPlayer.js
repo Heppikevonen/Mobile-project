@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Image, Text } from 'react-native';
+import { TouchableOpacity, View, Image, Text, SafeAreaView } from 'react-native';
 //import { Asset } from "expo-asset";
 //import theme from './styles/Theme';
 //import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-native-paper';
@@ -11,7 +11,7 @@ import { PodcastPlaylist } from '../constants/PodcastPlaylist';
 import styles from '../styles/styles';
 
 
-
+//const {width, height} = Dimensions.get('window');
 
 const DISABLED_OPACITY = 0.5;
 
@@ -35,7 +35,7 @@ class RadioPlayer extends Component {
 			fontLoaded: false,
 			volume: 1.0,
 			rate: 1.0,
-			portrait: null,
+			image: null,
 		};
 	}
 
@@ -52,7 +52,7 @@ class RadioPlayer extends Component {
 		});
 		(async () => {
 			await Font.loadAsync({
-				spaceMono: require('../assets/fonts/Roboto-Regular.ttf'),
+				roboRegular: require('../assets/fonts/Roboto-Regular.ttf'),
 				});
 			this.setState({ fontLoaded: true });
 		})();
@@ -103,7 +103,7 @@ class RadioPlayer extends Component {
 			this.setState({
 				playbackInstanceTitle: PodcastPlaylist[this.index].title,
 				playbackInstanceAuthor: PodcastPlaylist[this.index].author,
-				portrait: PodcastPlaylist[this.index].imageSource,
+				image: PodcastPlaylist[this.index].imageSource,
 				isLoading: false,
 			});
 		}
@@ -244,12 +244,12 @@ class RadioPlayer extends Component {
 		return !this.state.fontLoaded ? (
 			<View />
 		) : (
-			<View style={styles.containerPlayer}>
-				<View style={styles.portraitContainer}>
+			<SafeAreaView style={styles.containerPlayer}>
+				<View style={styles.imageContainer}>
 					<Image
-						style={styles.portrait}
+						style={styles.image}
 						source={{
-						uri: this.state.portrait,
+						uri: this.state.image,
 						}}
 					/>
 				</View>
@@ -260,86 +260,7 @@ class RadioPlayer extends Component {
 					<Text style={[styles.text]}>
 						{this.state.playbackInstanceAuthor}
 					</Text>
-					<Text style={[styles.text]}>
-						{this._getTimestamp()}
-					</Text>
-				</View>
-				<View
-					style={[
-						styles.buttonsContainerBase,
-						styles.buttonsContainerTopRow,
-						{
-							opacity: this.state.isLoading
-								? DISABLED_OPACITY
-								: 1.0,
-						},
-					]}
-				>
-					<TouchableOpacity
-						underlayColor={'#4cf9e8'}
-						style={styles.wrapper}
-						onPress={this._onBackPressed}
-						disabled={this.state.isLoading}
-					>
-						<View>
-							<MaterialIcons
-								name="fast-rewind"
-								size={40}
-								color="#ffffff"
-							/>
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity
-						underlayColor={'#4cf9e8'}
-						style={styles.wrapper}
-						onPress={this._onPlayPausePressed}
-						disabled={this.state.isLoading}
-					>
-						<View>
-							{this.state.isPlaying ? (
-								<MaterialIcons
-									name="pause"
-									size={40}
-									color="#ffffff"
-								/>
-							) : (
-								<MaterialIcons
-									name="play-arrow"
-									size={40}
-									color="#ffffff"
-								/>
-							)}
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity
-						underlayColor={'#4cf9e8'}
-						style={styles.wrapper}
-						onPress={this._onStopPressed}
-						disabled={this.state.isLoading}
-					>
-						<View>
-							<MaterialIcons
-								name="stop"
-								size={40}
-								color="#ffffff"
-							/>
-						</View>
-					</TouchableOpacity>
-					
-					<TouchableOpacity
-						underlayColor={'#4cf9e8'}
-						style={styles.wrapper}
-						onPress={this._onForwardPressed}
-						disabled={this.state.isLoading}
-					>
-						<View>
-							<MaterialIcons
-								name="fast-forward"
-								size={40}
-								color="#ffffff"
-							/>
-						</View>
-					</TouchableOpacity>
+				
 				</View>
 				<View
 					style={[
@@ -358,12 +279,82 @@ class RadioPlayer extends Component {
 						onSlidingComplete={this._onSeekSliderSlidingComplete}
 						thumbStyle={ styles.sliderThumb }
 						trackStyle={ styles.sliderTrack }
-						minimumTrackTintColor="#4CCFF9"
+						minimumTrackTintColor="#EA5A00"
+						maximumTrackTintColor="#f0cbb4"
 						disabled={this.state.isLoading}
 					/>
 				</View>
+				<View style={[styles.timeStamp]}>
+				<Text > {this._getMMSSFromMillis(this.state.playbackInstancePosition)} </Text>
+				<Text > {this._getMMSSFromMillis(this.state.playbackInstanceDuration)} </Text>
+				</View>
 				
-			</View>
+				<View
+					style={[
+						styles.radioControlsContainer,
+						
+						{
+							opacity: this.state.isLoading
+								? DISABLED_OPACITY
+								: 1.0,
+						},
+					]}
+				>
+					<TouchableOpacity
+						underlayColor={'#4cf9e8'}
+						//style={styles.wrapper}
+						onPress={this._onBackPressed}
+						disabled={this.state.isLoading}
+					>
+						<View>
+							<Ionicons
+								name="md-play-back-sharp"
+								size={50}
+								color="black"
+							/>
+						</View>
+					</TouchableOpacity>
+					<TouchableOpacity
+						underlayColor={'#4cf9e8'}
+						//style={styles.wrapper}
+						onPress={this._onPlayPausePressed}
+						disabled={this.state.isLoading}
+					>
+						<View>
+							{this.state.isPlaying ? (
+								<Ionicons
+									name="md-pause-sharp"
+									size={50}
+									color="black"
+								/>
+							) : (
+								<Ionicons
+									name="md-play-sharp"
+									size={50}
+									color="black"
+								/>
+							)}
+						</View>
+					</TouchableOpacity>
+					
+					<TouchableOpacity
+						underlayColor={'#4cf9e8'}
+						//style={styles.wrapper}
+						onPress={this._onForwardPressed}
+						disabled={this.state.isLoading}
+					>
+						<View>
+							<Ionicons
+								name="md-play-forward-sharp"
+								size={50}
+								color="black"
+							/>
+						</View>
+					</TouchableOpacity>
+				</View>
+				
+				
+			</SafeAreaView>
 		);
 	}
 }
