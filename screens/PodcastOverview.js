@@ -9,11 +9,11 @@ import styles from '../styles/styles';
 import theme from '../styles/Theme';
 import Search from '../components/Search';
 
-db.ref(ROOT_REF).push({
-  link: "https://feeds.npr.org/510298/podcast.xml",
-  category: ['personal development', 'sports'],
+// db.ref(ROOT_REF).push({
+//   link: "https://feeds.npr.org/510298/podcast.xml",
+//   category: ['personal development', 'sports'],
 
-})
+// })
 
 
 export default function PodcastOverview() {
