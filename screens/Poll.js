@@ -52,18 +52,16 @@ export default function Poll () {
         }}
       >
         <View style={styles.centeredView}>
-          <View
-            style={styles.modalView}
-          >
+          <View style={styles.modalView}>
             <Text
-            style={{
-              marginTop: 32,
-              fontSize: 20,
-              fontFamily: 'sans-serif'
-            }}
-          >
-            What type of music do you like?
-          </Text>
+              style={{
+                marginTop: 32,
+                fontSize: 20,
+                fontFamily: 'sans-serif'
+              }}
+            >
+              What type of music do you like?
+            </Text>
             <RNPoll
               appearFrom='top'
               totalVotes={30}
