@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View, Image } from 'react-native';
+import { ScrollView, Text, View, Image, Pressable } from 'react-native';
 import * as rssParser from 'react-native-rss-parser';
 import { db, ROOT_REF_RSS } from '../firebase/Config';
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -18,7 +18,7 @@ import Search from '../components/Search';
 
  
 
-export default function PodcastOverview() {
+export default function PodcastOverview({navigation}) {
     const { colors } = useTheme(theme);
     const [data, setData] = useState('');
     const [titleImages, setTitleImages] = useState([{}]);
@@ -47,7 +47,7 @@ export default function PodcastOverview() {
               .then((response) => response.text())
               .then((responseData) => rssParser.parse(responseData))
               .then((rss) => {
-                setTitleImages(arr => [...arr, {title: `${rss.title}`, url: `${rss.image.url}`}]);
+                setTitleImages(arr => [...arr, {title: `${rss.title}`, url: `${rss.image.url}`, description: `${rss.description}`}]);
                 setTitle(arr => [...arr, rss.title]); 
                 //console.log(title);           
                 //console.log(rss.title);
@@ -78,7 +78,7 @@ export default function PodcastOverview() {
     //   setTitle(searchArray);
     // }
     
-  //console.log(keysArrays)
+  // console.log(keysArrays)
 
   
    
@@ -99,8 +99,11 @@ export default function PodcastOverview() {
               <Row key={row} id={row} >
                 {row.map(col => (
                 <Col key={col} id={col}>
-                  <Image style={styles.tinyLogo} source={{uri: `${titleImages[col].url}`}}></Image>
-                  <Text style={[styles.podcastHeadline, { color: colors.accent }]} numberOfLines={3}> {titleImages[col].title}</Text>
+                  <Pressable onPress={() => navigation.navigate('podcastreview', {image: titleImages[col].url, title: titleImages[col].title, description: titleImages[col].description})}>
+                    <Image style={styles.tinyLogo} source={{uri: `${titleImages[col].url}`}}></Image>
+                    <Text style={[styles.podcastHeadline, { color: colors.accent }]} numberOfLines={3}> {titleImages[col].title}</Text>
+                  </Pressable>
+                  
                   {/* <Text style={[styles.headline, { color: colors.primary }]}>{category[col]}</Text> */}
                 </Col>
                 ))}                

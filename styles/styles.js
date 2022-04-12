@@ -3,20 +3,19 @@ import Constants from 'expo-constants'
 
 
 export default StyleSheet.create({
+  
+
   container: {
     // paddingTop: Constants.statusBarHeight,
     flex: 1,
     marginLeft: 16,
     marginRight: 16,
-	paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
   },
   tinyLogo: {
     width: 150,
     height: 150,
-	marginBottom: 6,
-
-	
-
+    marginBottom: 6
   },
   podcastHeadline: {
     fontSize: 16,
@@ -24,7 +23,7 @@ export default StyleSheet.create({
     width: 150,
     marginBottom: 24
   },
-  
+
   containerPlayer: {
 		flex: 1,
 		//flexDirection: 'column',
@@ -136,13 +135,13 @@ export default StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-	maxHeight: Dimensions.get('screen').height - 20
+    maxHeight: Dimensions.get('screen').height - 20
   },
   button: {
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-	marginTop: 30
+    marginTop: 30
   },
   buttonOpen: {
     backgroundColor: '#F194FF'
