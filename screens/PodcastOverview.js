@@ -21,10 +21,8 @@ import Search from '../components/Search';
 export default function PodcastOverview({navigation}) {
     const { colors } = useTheme(theme);
     const [data, setData] = useState('');
-    const [titleImages, setTitleImages] = useState([{}]);
-    const [title, setTitle] = useState([]);
+    const [dataRSSFeed, setDataRSSFeed] = useState([{}]);
     const [category, setCategory] = useState([]);
-    const [imageURL, setImageURL] = useState([]);
 
    
     
@@ -37,40 +35,35 @@ export default function PodcastOverview({navigation}) {
         //console.log(data);
 
         
-        if (Object.keys(data).length != Object.keys(title).length){
+        if (Object.keys(data).length != Object.keys(dataRSSFeed).length){
 
           for (let i = 0; i < Object.values(data).length; i++) {
             //console.log(Object.values(data)[i].link);
             setCategory(arr => [...arr, Object.values(data)[i].category]); 
+            console.log(category[i]);
     
             fetch(Object.values(data)[i].link)
               .then((response) => response.text())
               .then((responseData) => rssParser.parse(responseData))
               .then((rss) => {
-                setTitleImages(arr => [...arr, {title: `${rss.title}`, url: `${rss.image.url}`, description: `${rss.description}`}]);
-                setTitle(arr => [...arr, rss.title]); 
-                //console.log(title);           
-                //console.log(rss.title);
-                //console.log(rss.items.length);
-                //console.log(rss.image.url);
-                setImageURL(arr => [...arr, rss.image.url]); 
-                //console.log(imageURL);
-                //setImageURL(rss.image.url);
+                setDataRSSFeed(arr => [...arr, {
+                  title: `${rss.title}`, 
+                  imageUrl: `${rss.image.url}`, 
+                  author: `${rss.authors}`, 
+                  description: `${rss.description}`}]);
               })
+              
               .catch((err) => console.log(err));
           }
         }
-        
-        
       });
     }, []);
 
     
 
-    const keysArrays = Object.keys(title).reduce(function (rows, key, index) { 
+    const keysArrays = Object.keys(dataRSSFeed).reduce(function (rows, key, index) { 
       return (index % 2 == 0 ? rows.push([key]) 
         : rows[rows.length-1].push(key)) && rows;
-        
     }, []);
 
     // const executeSearch = (search) => {
@@ -82,7 +75,8 @@ export default function PodcastOverview({navigation}) {
 
   
    
-    let titleKey = Object.keys(title);
+    let key = Object.keys(dataRSSFeed);
+    //console.log(dataRSSFeed);
     //console.log(titleImages);
     //console.log(DataRSSFeed.getData());
     //console.log(titleKey);
@@ -94,14 +88,14 @@ export default function PodcastOverview({navigation}) {
         <ScrollView  >
           
           
-          {titleKey.length > 0 ? (
+          {key.length > 0 ? (
             keysArrays.map(row => (
               <Row key={row} id={row} >
                 {row.map(col => (
                 <Col key={col} id={col}>
-                  <Pressable onPress={() => navigation.navigate('podcastreview', {image: titleImages[col].url, title: titleImages[col].title, description: titleImages[col].description})}>
-                    <Image style={styles.tinyLogo} source={{uri: `${titleImages[col].url}`}}></Image>
-                    <Text style={[styles.podcastHeadline, { color: colors.accent }]} numberOfLines={3}> {titleImages[col].title}</Text>
+                  <Pressable onPress={() => navigation.navigate('podcastreview', {image: dataRSSFeed[col].imageUrl, title: dataRSSFeed[col].title, description: dataRSSFeed[col].description})}>
+                    <Image style={styles.tinyLogo} source={{uri: `${dataRSSFeed[col].imageUrl}`}}></Image>
+                    <Text style={[styles.podcastHeadline, { color: colors.accent }]} numberOfLines={3}> {dataRSSFeed[col].title}</Text>
                   </Pressable>
                   
                   {/* <Text style={[styles.headline, { color: colors.primary }]}>{category[col]}</Text> */}
