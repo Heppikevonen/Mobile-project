@@ -12,4 +12,5 @@ const firebaseConfig = ({
 
 const app = firebase.initializeApp(firebaseConfig);
 export const db = app.database(); 
-export const ROOT_REF = '/rss';
+export const ROOT_REF_RSS = '/rss';
+export const ROOT_REF_SONG_REQUESTS = '/songRequests';

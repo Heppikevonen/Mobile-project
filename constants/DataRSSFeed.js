@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import * as rssParser from 'react-native-rss-parser';
-import { db, ROOT_REF } from '../firebase/Config';
+import { db, ROOT_REF_RSS } from '../firebase/Config';
 
 
- export function  DataRSSFeed() {
 
-    const [dataFromDatabase, setDataFromDatabase] = useState('');
-    const [dataRSSFeed, setDataRSSFeed] = useState([{}]);
+ const DataRSSFeed = () => {
+
+ function getData () {
+
+     const [dataFromDatabase, setDataFromDatabase] = useState('');
+     const [dataRSSFeed, setDataRSSFeed] = useState([{}]);
+     
     
     
     useEffect(() => {
-        db.ref(ROOT_REF).on('value', querySnapShot => {
+        db.ref(ROOT_REF_RSS).on('value', querySnapShot => {
           let dataTemp = querySnapShot.val() ? querySnapShot.val() : {};
           let data = { ...dataTemp };
           setDataFromDatabase(data);
+          
 
           
         if (Object.keys(dataFromDatabase).length != Object.keys(dataRSSFeed).length){
@@ -39,8 +44,15 @@ import { db, ROOT_REF } from '../firebase/Config';
           
         });
       }, []);
+      return dataRSSFeed; 
 
+      //return dataRSSFeed; 
+
+      
 }
+}
+
+export default DataRSSFeed; 
 
 
 

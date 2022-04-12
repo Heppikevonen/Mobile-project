@@ -158,5 +158,14 @@ export default StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center'
-  }
+  },
+  textInput: {
+	  marginTop: 10,
+	  marginBottom: 10,
+  },
+  textInputLarge: {
+	marginTop: 10,
+	marginBottom: 10,
+	height: 150,
+}
 })

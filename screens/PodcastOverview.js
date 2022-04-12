@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View, Image } from 'react-native';
 import * as rssParser from 'react-native-rss-parser';
-import { db, ROOT_REF } from '../firebase/Config';
+import { db, ROOT_REF_RSS } from '../firebase/Config';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Provider as PaperProvider, useTheme } from 'react-native-paper';
 //import { registerRootComponent } from 'expo';
 import styles from '../styles/styles';
 import theme from '../styles/Theme';
 import Search from '../components/Search';
-import { dataRSSFeed } from '../constants/DataRSSFeed';
+//import DataRSSFeed from '../constants/DataRSSFeed';
 
 // db.ref(ROOT_REF).push({
 //   link: "https://feeds.npr.org/510298/podcast.xml",
@@ -29,7 +29,7 @@ export default function PodcastOverview() {
    
     
     useEffect(() => {
-      db.ref(ROOT_REF).on('value', querySnapShot => {
+      db.ref(ROOT_REF_RSS).on('value', querySnapShot => {
         let dataTemp = querySnapShot.val() ? querySnapShot.val() : {};
         let data = { ...dataTemp };
         setData(data);
@@ -84,7 +84,7 @@ export default function PodcastOverview() {
    
     let titleKey = Object.keys(title);
     //console.log(titleImages);
-    console.log(dataRSSFeed);
+    //console.log(DataRSSFeed.getData());
     //console.log(titleKey);
     return (
     <PaperProvider theme={theme}>
