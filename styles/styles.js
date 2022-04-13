@@ -1,10 +1,7 @@
 import { StyleSheet, Dimensions, StatusBar, Platform } from 'react-native'
 import Constants from 'expo-constants'
 
-
 export default StyleSheet.create({
-  
-
   container: {
     // paddingTop: Constants.statusBarHeight,
     flex: 1,
@@ -25,94 +22,88 @@ export default StyleSheet.create({
   },
 
   containerPlayer: {
-		flex: 1,
-		//flexDirection: 'column',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		//alignSelf: 'stretch',
-		backgroundColor: 'white',
-	},
-	imageContainer: {
-		width: 300,
-    	height: 340,
-    	marginBottom: 25,
-	},
-	image: {
-		width: '100%',
-    	height: '100%',
-   		borderRadius: 15,
-	
-	},
-	detailsContainer: {
-		height: 130,
-		marginTop: 10,
-		alignItems: 'center',
-	},
-	playbackContainer: {
-		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		alignSelf: 'stretch',
-	},
-	playbackSlider: {
-		alignSelf: 'stretch',
-		marginLeft: 10,
-		marginRight: 10,
-		
-	},
-	timeStamp: {
-		flex: 1,
-		width: '80%',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		
-	  },
-	  
-	text: {
-		fontSize: 16,
-		minHeight: 16,
-		marginBottom: 20,
-		justifyContent: 'center',
-		alignItems: 'center',
-		color: 'black',
-		fontWeight: 'bold'
-	},
-	sliderThumb: {
-		width: 12,
-		height: 12,
-		backgroundColor: '#EA5A00',
-		borderRadius: 10 / 2,
-		
-	},
-	sliderTrack: {
-		height: 2,
-		
-		shadowColor: '#ccc',
-		shadowOffset: {
-			width: 0,
-			height: 0
-		},
-		shadowRadius: 5,
-		shadowOpacity: 5,
-	},
-	radioControlsContainer: {
-		flexDirection: 'row',
-    	justifyContent: 'space-between',
-    	alignItems: 'center',
-    	marginTop: 15,
-   		width: '80%',
-	},
-	bottomSection: {
-		borderTopColor: '#F4EEEA',
-    	borderWidth: 1,
-    	width: '100%',
-    	alignItems: 'center',
-    	paddingVertical: 15,
-	},
-	
-	
-	
+    flex: 1,
+    //flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    //alignSelf: 'stretch',
+    backgroundColor: 'white'
+  },
+  imageContainer: {
+    width: 300,
+    height: 340,
+    marginBottom: 25
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 15
+  },
+  detailsContainer: {
+    height: 130,
+    marginTop: 10,
+    alignItems: 'center'
+  },
+  playbackContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'stretch'
+  },
+  playbackSlider: {
+    alignSelf: 'stretch',
+    marginLeft: 10,
+    marginRight: 10
+  },
+  timeStamp: {
+    flex: 1,
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+
+  text: {
+    fontSize: 16,
+    minHeight: 16,
+    marginBottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'black',
+    fontWeight: 'bold'
+  },
+  sliderThumb: {
+    width: 12,
+    height: 12,
+    backgroundColor: '#EA5A00',
+    borderRadius: 10 / 2
+  },
+  sliderTrack: {
+    height: 2,
+
+    shadowColor: '#ccc',
+    shadowOffset: {
+      width: 0,
+      height: 0
+    },
+    shadowRadius: 5,
+    shadowOpacity: 5
+  },
+  radioControlsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 15,
+    width: '80%'
+  },
+  bottomSection: {
+    borderTopColor: '#F4EEEA',
+    borderWidth: 1,
+    width: '100%',
+    alignItems: 'center',
+    paddingVertical: 15
+  },
+
   flex: {
     flexDirection: 'row',
     marginTop: 20,
@@ -159,12 +150,27 @@ export default StyleSheet.create({
     textAlign: 'center'
   },
   textInput: {
-	  marginTop: 10,
-	  marginBottom: 10,
+    marginTop: 10,
+    marginBottom: 10
   },
   textInputLarge: {
-	marginTop: 10,
-	marginBottom: 10,
-	height: 150,
-}
+    marginTop: 10,
+    marginBottom: 10,
+    height: 150
+  },
+  showMoreButton: {
+    marginLeft: 10,
+    color: 'blue'
+  },
+  showMoreText: {
+    color: 'blue',
+    marginLeft: 5
+  },
+  showLessText: {
+    color: 'blue',
+    marginLeft: 5
+  },
+  podcastHeader: {
+    marginBottom: 15
+  }
 })

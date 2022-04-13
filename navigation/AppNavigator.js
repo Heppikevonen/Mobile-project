@@ -21,7 +21,7 @@ const StackNavigator = () => {
         <Stack.Screen 
           name="podcastreview"
           component={PodcastReview}
-          options={({ route }) => ({ headerTitle: route.params.title, title: 'podcastname' })}
+          options={({ route }) => ({ headerTitle: route.params.title, title: 'podcastname'})}
         />
       </Stack.Navigator>
   )
