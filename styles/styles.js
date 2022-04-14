@@ -172,5 +172,9 @@ export default StyleSheet.create({
   },
   podcastHeader: {
     marginBottom: 15
+  }, 
+  dropDown: {
+    marginBottom: 10, 
+    marginTop: 10,
   }
 })

@@ -8,6 +8,7 @@ import { Provider as PaperProvider, useTheme } from 'react-native-paper';
 import styles from '../styles/styles';
 import theme from '../styles/Theme';
 import Search from '../components/Search';
+import DropDown from "react-native-paper-dropdown";
 //import DataRSSFeed from '../constants/DataRSSFeed';
 
 // db.ref(ROOT_REF).push({
@@ -23,6 +24,40 @@ export default function PodcastOverview({navigation}) {
     const [data, setData] = useState('');
     const [dataRSSFeed, setDataRSSFeed] = useState([{}]);
     const [category, setCategory] = useState([]);
+    const [orderBy, setOrderBy] = useState('1');
+    const [filter, setFilter] = useState('');
+    const [showDropDownOrderBy, setShowDropDownOrderBy] = useState(false);
+    const [showDropDownFilter, setShowDropDownFilter] = useState(false);
+
+    const orderByList = [
+      {
+        label: "Popularity",
+        value: "1",
+      },
+      {
+        label: "A-Z",
+        value: "2",
+      },
+      {
+        label: "Z-A",
+        value: "3",
+      },
+    ];
+
+    const filterList = [
+      {
+        label: "Book summaries",
+        value: "1",
+      },
+      {
+        label: "Educational",
+        value: "2",
+      },
+      {
+        label: "Sports",
+        value: "3",
+      },
+    ];
 
    
     
@@ -84,6 +119,35 @@ export default function PodcastOverview({navigation}) {
     <PaperProvider theme={theme}>
       <View style={styles.container}>  
       <Search></Search>
+
+      <View style={styles.dropDown}>
+      <DropDown
+              label={"Oder by"}
+              mode={"outlined"}
+              visible={showDropDownOrderBy}
+              showDropDown={() => setShowDropDownOrderBy(true)}
+              onDismiss={() => setShowDropDownOrderBy(false)}
+              value={orderBy}
+              setValue={setOrderBy}
+              list={orderByList}
+              
+            />
+            </View>
+        
+            <View style={styles.dropDown}>
+        <DropDown
+              label={"Filter"}
+              mode={"outlined"}
+              visible={showDropDownFilter}
+              showDropDown={() => setShowDropDownFilter(true)}
+              onDismiss={() => setShowDropDownFilter(false)}
+              value={filter}
+              setValue={setFilter}
+              list={filterList}
+              multiSelect
+              style={styles.dropDown}
+            />
+            </View>
       
         <ScrollView  >
           
