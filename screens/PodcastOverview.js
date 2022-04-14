@@ -8,7 +8,9 @@ import { Provider as PaperProvider, useTheme } from 'react-native-paper';
 import styles from '../styles/styles';
 import theme from '../styles/Theme';
 import Search from '../components/Search';
-import DropDown from "react-native-paper-dropdown";
+//import DropDown from "react-native-paper-dropdown";
+import DropDownPicker from 'react-native-dropdown-picker';
+
 //import DataRSSFeed from '../constants/DataRSSFeed';
 
 // db.ref(ROOT_REF).push({
@@ -123,22 +125,28 @@ export default function PodcastOverview({navigation}) {
         <Row>
           <Col size={45}>
           <View style={styles.dropDown}>
-           <DropDown
-              label={"Oder by"}
-              mode={"outlined"}
-              visible={showDropDownOrderBy}
-              showDropDown={() => setShowDropDownOrderBy(true)}
-              onDismiss={() => setShowDropDownOrderBy(false)}
-              value={orderBy}
-              setValue={setOrderBy}
-              list={orderByList}
-            />
+          <DropDownPicker
+            open={showDropDownOrderBy}
+            value={orderBy}
+            items={orderByList}
+            setOpen={setShowDropDownOrderBy}
+            setValue={setOrderBy}
+            //setItems={set}
+          />
             </View>
           </Col>
           <Col size={5}></Col>
           <Col size={45}> 
             <View style={styles.dropDown}>
-            <DropDown
+            <DropDownPicker
+            open={showDropDownFilter}
+            value={filter}
+            items={filterList}
+            setOpen={setShowDropDownFilter}
+            setValue={setFilter}
+            //setItems={setFilter}
+          />
+            {/* <DropDown
               label={"Filter"}
               mode={"outlined"}
               visible={showDropDownFilter}
@@ -149,7 +157,7 @@ export default function PodcastOverview({navigation}) {
               list={filterList}
               multiSelect
               style={styles.dropDown}
-            />
+            /> */}
             </View>
           </Col>
         </Row>
@@ -164,7 +172,7 @@ export default function PodcastOverview({navigation}) {
             keysArrays.map(row => (
               <Row key={row} id={row} >
                 {row.map(col => (
-                <Col key={col} id={col}>
+                <Col key={col} id={col} size={50}>
                   <Pressable onPress={() => navigation.navigate('podcastreview', {image: dataRSSFeed[col].imageUrl, title: dataRSSFeed[col].title, description: dataRSSFeed[col].description})}>
                     <Image style={styles.tinyLogo} source={{uri: `${dataRSSFeed[col].imageUrl}`}}></Image>
                     <Text style={[styles.podcastHeadline, { color: colors.accent }]} numberOfLines={3}> {dataRSSFeed[col].title}</Text>
