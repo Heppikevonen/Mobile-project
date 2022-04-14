@@ -7,7 +7,7 @@ export default StyleSheet.create({
     flex: 1,
     marginLeft: 16,
     marginRight: 16,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   tinyLogo: {
     width: 150,
@@ -160,17 +160,24 @@ export default StyleSheet.create({
   },
   showMoreButton: {
     marginLeft: 10,
-    color: 'blue'
   },
   showMoreText: {
-    color: 'blue',
-    marginLeft: 5
-  },
-  showLessText: {
-    color: 'blue',
+    color: 'orange',
     marginLeft: 5
   },
   podcastHeader: {
     marginBottom: 15
-  }
+  },
+  descriptionText: {
+    marginTop: 5,
+  },
+  smallDescription: {
+    marginLeft: 10
+  },
+  podcastImage: {
+    paddingRight: 10,
+    resizeMode: 'cover',
+    aspectRatio: 1*1,
+    maxHeight: '100%',
+  },
 })
