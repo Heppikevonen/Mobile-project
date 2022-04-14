@@ -120,7 +120,7 @@ export default function PodcastOverview({navigation}) {
       <View style={styles.container}>  
       <Search></Search>
 
-      {/* <View style={styles.dropDown}>
+      <View style={styles.dropDown}>
       <DropDown
               label={"Oder by"}
               mode={"outlined"}
@@ -147,7 +147,7 @@ export default function PodcastOverview({navigation}) {
               multiSelect
               style={styles.dropDown}
             />
-            </View> */}
+            </View>
       
         <ScrollView  >
           

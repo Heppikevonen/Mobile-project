@@ -180,4 +180,8 @@ export default StyleSheet.create({
     aspectRatio: 1*1,
     maxHeight: '100%',
   },
+  dropDown: {
+    marginTop: 10, 
+    marginBottom: 10,
+  }
 })
