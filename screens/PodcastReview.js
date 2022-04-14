@@ -1,6 +1,11 @@
-import { View, Text, Image, BackHandler, Pressable } from 'react-native'
+import { View, Image, BackHandler, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Provider as PaperProvider, useTheme } from 'react-native-paper'
+import {
+  Provider as PaperProvider,
+  useTheme,
+  Divider,
+  Text
+} from 'react-native-paper'
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import theme from '../styles/Theme'
 import styles from '../styles/styles'
@@ -26,11 +31,11 @@ export default function PodcastReview ({ route, navigation }) {
       <View style={styles.container}>
         <Grid>
           <Row style={styles.podcastHeader} size={25}>
-            <Col>
-              <Image style={styles.tinyLogo} source={{ uri: image }} />
+            <Col size={50}>
+                <Image style={styles.podcastImage} source={{ uri: image }} />
             </Col>
-            <Col>
-              <Text>
+            <Col size={50}>
+              <Text style={styles.smallDescription}>
                 {!showMore ? description.substring(0, 175) + '...' : null}
                 <Pressable
                   style={styles.showMoreButton}
@@ -43,16 +48,17 @@ export default function PodcastReview ({ route, navigation }) {
               </Text>
             </Col>
           </Row>
+          <Divider />
           {showMore ? (
             <Row size={75}>
-              <Col style={{}}>
-                <Text>
+              <Col>
+                <Text style={styles.descriptionText}>
                   {description}
                   <Pressable
                     style={styles.showMoreButton}
                     onPress={() => setShowMore(!showMore)}
                   >
-                    <Text style={styles.showLessText}>
+                    <Text style={styles.showMoreText}>
                       {showMore ? 'Show less' : null}
                     </Text>
                   </Pressable>
