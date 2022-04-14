@@ -181,7 +181,10 @@ export default StyleSheet.create({
     maxHeight: '100%',
   },
   dropDown: {
-    marginTop: 10, 
-    marginBottom: 10,
+    marginTop: 20, 
+    marginBottom: 5,
+  }, 
+  scrollView: {
+    marginTop: 100,
   }
 })

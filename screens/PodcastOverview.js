@@ -119,9 +119,11 @@ export default function PodcastOverview({navigation}) {
     <PaperProvider theme={theme}>
       <View style={styles.container}>  
       <Search></Search>
-
-      <View style={styles.dropDown}>
-      <DropDown
+      <Grid>
+        <Row>
+          <Col size={45}>
+          <View style={styles.dropDown}>
+           <DropDown
               label={"Oder by"}
               mode={"outlined"}
               visible={showDropDownOrderBy}
@@ -130,12 +132,13 @@ export default function PodcastOverview({navigation}) {
               value={orderBy}
               setValue={setOrderBy}
               list={orderByList}
-              
             />
             </View>
-        
+          </Col>
+          <Col size={5}></Col>
+          <Col size={45}> 
             <View style={styles.dropDown}>
-        <DropDown
+            <DropDown
               label={"Filter"}
               mode={"outlined"}
               visible={showDropDownFilter}
@@ -148,8 +151,13 @@ export default function PodcastOverview({navigation}) {
               style={styles.dropDown}
             />
             </View>
+          </Col>
+        </Row>
+      </Grid>
       
-        <ScrollView  >
+        
+      
+        <ScrollView  style={styles.scrollView}>
           
           
           {key.length > 0 ? (
