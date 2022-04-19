@@ -8,7 +8,7 @@ import { Provider as PaperProvider, useTheme } from 'react-native-paper';
 import styles from '../styles/styles';
 import theme from '../styles/Theme';
 import Search from '../components/Search';
-//import DropDown from "react-native-paper-dropdown";
+import DropDown from "react-native-paper-dropdown";
 import DropDownPicker from 'react-native-dropdown-picker';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -35,17 +35,17 @@ export default function PodcastOverview({navigation}) {
     const [isLoaded, setIsLoaded] = useState(false); 
 
     const orderByList = [
-      // {
-      //   label: "Popularity",
-      //   value: "1",
-      // },
       {
-        label: "A-Z",
+        label: "Popularity",
         value: "1",
       },
       {
-        label: "Z-A",
+        label: "A-Z",
         value: "2",
+      },
+      {
+        label: "Z-A",
+        value: "3",
       },
     ];
 
@@ -107,7 +107,8 @@ export default function PodcastOverview({navigation}) {
               .catch((err) => console.log(err));
         }
         setIsLoaded(true);
-        console.log(isLoaded)
+        console.log(isLoaded);
+        
          
       }
       );
@@ -120,35 +121,65 @@ export default function PodcastOverview({navigation}) {
 
     //console.log(result);
 
+    
+
+    
+
+    // const sortedDataRSSFeedByAlphabetReverseOrder = dataSearch.sort(function(a, b) {
+    //   if(a.routes) return 1; // new check
+    //   if(b.routes) return -1; // new check
+    //   if(a.title.toLowerCase() < b.title.toLowerCase()) return 1;
+    //   if(a.title.toLowerCase() > b.title.toLowerCase()) return -1;
+    //   return 0;
+    // });
+
+    // const sortedDataRSSFeedByAlphabet = dataSearch.sort(function(a, b) {
+    //   if(a.routes) return -1; // new check
+    //   if(b.routes) return 1; // new check
+    //   if(a.title.toLowerCase() < b.title.toLowerCase()) return -1;
+    //   if(a.title.toLowerCase() > b.title.toLowerCase()) return 1;
+    //   return 0;
+    // });
+
+    
+
+    const orderByFunction = () => {
+      if (orderBy === '3'){
+        dataSearch.sort(function(a, b) {
+          if(a.routes) return 1;
+          if(b.routes) return -1; 
+          if(a.title.toLowerCase() < b.title.toLowerCase()) return 1;
+          if(a.title.toLowerCase() > b.title.toLowerCase()) return -1;
+          return 0;
+        });
+        //executeSearch('');
+        //setDataSearch(order);
+        
+        
+      } else if (orderBy === '2') {
+        dataSearch.sort(function(a, b) {
+          if(a.routes) return -1;
+          if(b.routes) return 1; 
+          if(a.title.toLowerCase() < b.title.toLowerCase()) return -1;
+          if(a.title.toLowerCase() > b.title.toLowerCase()) return 1;
+          return 0;
+        });
+        //executeSearch('');
+        //setDataSearch(order);
+        
+         
+      } else {
+        dataSearch.sort(function(a, b){return 0.5 - Math.random()});
+      }
+
+    }
+
     const keysArrays = Object.keys(dataSearch).reduce(function (rows, key, index) { 
       return (index % 2 == 0 ? rows.push([key]) 
         : rows[rows.length-1].push(key)) && rows;
     }, []);
 
-    const sortedDataRSSFeedByAlphabetReverseOrder = dataSearch.sort(function(a, b) {
-      if(a.routes) return 1; // new check
-      if(b.routes) return -1; // new check
-      if(a.title.toLowerCase() < b.title.toLowerCase()) return 1;
-      if(a.title.toLowerCase() > b.title.toLowerCase()) return -1;
-      return 0;
-    });
-
-    const sortedDataRSSFeedByAlphabet = dataSearch.sort(function(a, b) {
-      if(a.routes) return -1; // new check
-      if(b.routes) return 1; // new check
-      if(a.title.toLowerCase() < b.title.toLowerCase()) return -1;
-      if(a.title.toLowerCase() > b.title.toLowerCase()) return 1;
-      return 0;
-    });
-
-    const orderByFunction = () => {
-      if (orderBy === '2'){
-        sortedDataRSSFeedByAlphabetReverseOrder; 
-      } else {
-        sortedDataRSSFeedByAlphabet; 
-      }
-
-    }
+    
 
 
     const executeSearch = (search) => {
@@ -190,6 +221,7 @@ export default function PodcastOverview({navigation}) {
     <PaperProvider theme={theme}>
       <View style={styles.container}>  
       <Search executeSearch={executeSearch}></Search>
+
       
       <Grid>
         <Row>
@@ -214,7 +246,7 @@ export default function PodcastOverview({navigation}) {
           <Col size={45}> 
             <View style={styles.dropDown}>
             <DropDownPicker
-            // multiple={true}
+            //multiple={true}
             // min={0}
             // max={2}
             open={showDropDownFilter}
@@ -224,18 +256,7 @@ export default function PodcastOverview({navigation}) {
             setValue={setFilter}
             //setItems={setFilter}
           />
-            {/* <DropDown
-              label={"Filter"}
-              mode={"outlined"}
-              visible={showDropDownFilter}
-              showDropDown={() => setShowDropDownFilter(true)}
-              onDismiss={() => setShowDropDownFilter(false)}
-              value={filter}
-              setValue={setFilter}
-              list={filterList}
-              multiSelect
-              style={styles.dropDown}
-            /> */}
+           
             </View>
           </Col>
         </Row>
