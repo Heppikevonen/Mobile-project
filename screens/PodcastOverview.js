@@ -29,40 +29,24 @@ export default function PodcastOverview({navigation}) {
     const [dataSearch, setDataSearch] = useState([]);
     const [category, setCategory] = useState([]);
     const [orderBy, setOrderBy] = useState('1');
-    const [filter, setFilter] = useState('');
+    const [filter, setFilter] = useState([]);
     const [showDropDownOrderBy, setShowDropDownOrderBy] = useState(false);
     const [showDropDownFilter, setShowDropDownFilter] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false); 
 
-    const orderByList = [
-      {
-        label: "Popularity",
-        value: "1",
-      },
-      {
-        label: "A-Z",
-        value: "2",
-      },
-      {
-        label: "Z-A",
-        value: "3",
-      },
-    ];
 
-    const filterList = [
-      {
-        label: "Book summaries",
-        value: "1",
-      },
-      {
-        label: "Educational",
-        value: "2",
-      },
-      {
-        label: "Sports",
-        value: "3",
-      },
-    ];
+    const [filterList, setFilterList] = useState([
+      {label: 'Books', value: 'books'},
+      {label: 'Education', value: 'education'},
+      {label: 'Sports', value: 'sports'},
+    ]);
+
+    const [orderByList, setOrderByList] = useState([
+      {label: 'Popularity', value: '1'},
+      {label: 'A-Z', value: '2'},
+      {label: 'Z-A', value: '3'},
+    ]);
+
 
    
     
@@ -83,7 +67,7 @@ export default function PodcastOverview({navigation}) {
           for (let i = 0; i < Object.values(data).length; i++) {
             //console.log(Object.values(data)[i].link);
             setCategory(arr => [...arr, Object.values(data)[i].category]); 
-            console.log(category[i]);
+            //console.log(category[i]);
     
             fetch(Object.values(data)[i].link)
               .then((response) => response.text())
@@ -107,7 +91,7 @@ export default function PodcastOverview({navigation}) {
               .catch((err) => console.log(err));
         }
         setIsLoaded(true);
-        console.log(isLoaded);
+        //console.log(isLoaded);
         
          
       }
@@ -183,6 +167,7 @@ export default function PodcastOverview({navigation}) {
 
 
     const executeSearch = (search) => {
+      //setDataSearch(dataRSSFeed);
       const searchArray = dataRSSFeed.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()));
       setDataSearch(searchArray); 
     }
@@ -191,27 +176,38 @@ export default function PodcastOverview({navigation}) {
     //   setDataSearch(dataRSSFeed); 
     //   console.log(dataSearch);
 
-    // let dataTesting; 
+     
+    //console.log(dataRSSFeed);
 
-    // dataTesting = dataRSSFeed.filter((item) => item.category == 'sports')
-    //   .map(({id, category}) => ({id, category}));
-    // console.log(dataTesting);
-
+    const executeFilter = (filter) => {
+      if (filter != '') {
+        console.log(filter);
+        const filterArray = dataRSSFeed.filter(items => items.category.find(category => filter.includes(category)))
+        //const filterArray = dataRSSFeed.filter((item) => item.category.includes(`${filter}`))
+        .map(({title, imageUrl, author, description, category}) => ({title, imageUrl, author, description, category}));
+        setDataSearch([]);
+        setDataSearch(filterArray); 
+        orderByFunction(); 
+      } else {
+        setDataSearch(dataRSSFeed);
+        orderByFunction();
+      }
+      
+    }
     
+
+    //console.log(dataRSSFeed)
+  
+    //data.filter(items => items.sizes.split(',').find(size => filterOptions.includes(size)))
 
     //console.log(orderBy);
 
     
-
-    // const executeSearch = (search) => {
-    //   const searchArray = title.filter((title) => title.startsWith(search));
-    //   setTitle(searchArray);
-    // }
     
   // console.log(keysArrays)
 
   
-   
+   //console.log(filter);
     let key = Object.keys(dataRSSFeed);
     //console.log(dataRSSFeed);
     //console.log(titleImages);
@@ -220,7 +216,10 @@ export default function PodcastOverview({navigation}) {
     return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>  
-      <Search executeSearch={executeSearch}></Search>
+      <Search 
+        executeSearch={executeSearch}
+        //onIconPress={executeSearch('')}
+      ></Search>
 
       
       <Grid>
@@ -235,10 +234,8 @@ export default function PodcastOverview({navigation}) {
             items={orderByList}
             setOpen={setShowDropDownOrderBy}
             setValue={setOrderBy}
+            setItems={setOrderByList}
             onChangeValue={orderByFunction}
-            
-            
-            //setItems={set}
           />
             </View>
           </Col>
@@ -246,15 +243,16 @@ export default function PodcastOverview({navigation}) {
           <Col size={45}> 
             <View style={styles.dropDown}>
             <DropDownPicker
-            //multiple={true}
-            // min={0}
-            // max={2}
             open={showDropDownFilter}
             value={filter}
             items={filterList}
+            multiple={true}
+            min={0}
+            //max={2}
             setOpen={setShowDropDownFilter}
             setValue={setFilter}
-            //setItems={setFilter}
+            setItems={setFilterList}
+            onChangeValue={executeFilter}
           />
            
             </View>

@@ -1,18 +1,27 @@
 import React, {useState} from 'react';
-import { Searchbar } from 'react-native-paper';
+import { ActivityIndicator} from "react-native";
+import SearchBar from 'react-native-platform-searchbar';
 
-export default function Search ({executeSearch}) {
-  const [searchQuery, setSearchQuery] = useState('');
+export default function Search({executeSearch}) {
+const [search, setSearch] = useState('');
 
   return (
-    <Searchbar
-      placeholder="Search"
-      onChangeText={text => setSearchQuery(text)}
-      value={searchQuery}
-      returnKeyType="search"
-      onSubmitEditing={() => executeSearch(searchQuery)}
-      onIconPress={() => executeSearch(searchQuery)}
-    />
-  );
-};
-
+    
+      <SearchBar
+        value={search}
+        onChangeText={setSearch}
+        placeholder="Search"
+        theme="light"
+        platform="android"
+        onCancel={() => executeSearch('')}
+        onClear={() => executeSearch('')}
+        onSubmitEditing={() => executeSearch(search)}
+        //style={styles.searchBar}
+    >
+        {/* {loading ? (
+            <ActivityIndicator style={{ marginRight: 10 }} />
+        ) : undefined} */}
+    </SearchBar>
+      
+  )
+}

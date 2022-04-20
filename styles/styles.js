@@ -186,5 +186,11 @@ export default StyleSheet.create({
   }, 
   scrollView: {
     marginTop: 100,
-  }
+  }, 
+  searchBox: {
+    marginBottom: 20,
+    borderColor: '#333',
+    borderWidth: 1,
+    padding: 5,
+}
 })
