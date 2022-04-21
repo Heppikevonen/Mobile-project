@@ -14,7 +14,14 @@ const Stack = createStackNavigator();
 
 const StackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: theme.colors.surface2},
+        headerTintColor: theme.colors.onSurface,
+        headerTitleAlign: 'center',
+        cardStyle:{ backgroundColor: theme.colors.surface}
+      }}
+    >
       <Stack.Screen name="Podcasts" component={PodcastOverview} />
       <Stack.Screen
         name="podcastreview"
@@ -36,6 +43,7 @@ const AppNavigator = () => {
         tabBarStyle: { backgroundColor: theme.colors.surface2, height: 70 },
         tabBarLabelStyle: { paddingBottom: 10, color: theme.colors.onSurface },
         tabBarActiveBackgroundColor: theme.colors.surfaceVariant,
+        headerShown: false,
       }}
     >
       <Tab.Screen
@@ -56,7 +64,6 @@ const AppNavigator = () => {
               color={theme.colors.onSurface}
             />
           ),
-          headerShown: false,
         }}
       />
       <Tab.Screen
