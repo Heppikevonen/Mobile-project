@@ -208,5 +208,15 @@ export default StyleSheet.create({
     borderColor: '#333',
     borderWidth: 1,
     padding: 5,
-}
+}, 
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    maxHeight: '30%'
+}, 
+  textAccordion: {
+    alignContent: 'center',
+    fontWeight: 'bold',
+  }
+
 })

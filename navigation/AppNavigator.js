@@ -8,6 +8,7 @@ import { MaterialIcons, Ionicons, Entypo } from "@expo/vector-icons";
 import styles from "../styles/styles";
 import PodcastReview from "../screens/PodcastReview";
 import theme from "../styles/Theme";
+import Home from "../screens/Home";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -22,6 +23,8 @@ const StackNavigator = () => {
         cardStyle:{ backgroundColor: theme.colors.surface}
       }}
     >
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Song Request" component={SongRequest} />
       <Stack.Screen name="Podcasts" component={PodcastOverview} />
       <Stack.Screen
         name="podcastreview"
@@ -48,6 +51,13 @@ const AppNavigator = () => {
     >
       <Tab.Screen
         name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: (color) => <Entypo name="home" size={24} color={color} />,
+        }}
+      />
+      <Tab.Screen
+        name="Player"
         component={RadioPlayer}
         options={{
           tabBarIcon: (color) => <Entypo name="home" size={24} color={color} />,
