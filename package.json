@@ -34,7 +34,8 @@
     "react-native-rss-parser": "^1.5.1",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
-    "react-native-web": "0.17.1"
+    "react-native-web": "0.17.1",
+    "xdate": "^0.8.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

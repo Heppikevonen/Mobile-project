@@ -166,7 +166,7 @@ export default StyleSheet.create({
     marginLeft: 5
   },
   podcastHeader: {
-    marginBottom: 15
+    height: 200
   },
   descriptionText: {
     marginTop: 5,
@@ -176,8 +176,24 @@ export default StyleSheet.create({
   },
   podcastImage: {
     paddingRight: 10,
-    resizeMode: 'cover',
     aspectRatio: 1*1,
-    maxHeight: '100%',
+    maxHeight: '100%'
   },
+  episodeHeader: {
+    fontSize: 30,
+    marginBottom: 10
+  },
+  episodeName: {
+    color: 'black',
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  episodeDivider: {
+    height: 2,
+    marginTop: 10
+  },
+  listItem: {
+    height: 80
+  }
 })

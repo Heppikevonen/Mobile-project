@@ -1,4 +1,11 @@
-import { View, Image, BackHandler, Pressable } from 'react-native'
+import {
+  View,
+  Image,
+  BackHandler,
+  Pressable,
+  FlatList,
+  TouchableOpacity
+} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {
   Provider as PaperProvider,
@@ -9,10 +16,12 @@ import {
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import theme from '../styles/Theme'
 import styles from '../styles/styles'
+import XDate from 'xdate'
 
 export default function PodcastReview ({ route, navigation }) {
-  const { image, description } = route.params
+  const { image, description, items } = route.params
   const [showMore, setShowMore] = useState(false)
+  const DATA = items
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', close)
@@ -26,31 +35,43 @@ export default function PodcastReview ({ route, navigation }) {
     return true
   }
 
+
+  function dateFormat(date) {
+
+  }
+
+  console.log(items)
+
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
         <Grid>
-          <Row style={styles.podcastHeader} size={25}>
-            <Col size={50}>
-                <Image style={styles.podcastImage} source={{ uri: image }} />
+          <Row style={styles.podcastHeader}>
+            <Col>
+              <Image style={styles.podcastImage} source={{ uri: image }} />
             </Col>
-            <Col size={50}>
+            <Col>
               <Text style={styles.smallDescription}>
-                {!showMore ? description.substring(0, 175) + '...' : null}
-                <Pressable
-                  style={styles.showMoreButton}
-                  onPress={() => setShowMore(!showMore)}
-                >
-                  <Text style={styles.showMoreText}>
-                    {!showMore ? 'Show more' : null}
-                  </Text>
-                </Pressable>
+                {!showMore && description.length > 175 ? (
+                  <>
+                    {description.substring(0, 175) + '...'}
+                    <Pressable
+                      style={styles.showMoreButton}
+                      onPress={() => setShowMore(!showMore)}
+                    >
+                      <Text style={styles.showMoreText}>
+                        {!showMore ? 'Show more' : null}
+                      </Text>
+                    </Pressable>
+                  </>
+                ) : (
+                  description.substring(0, 175)
+                )}
               </Text>
             </Col>
           </Row>
-          <Divider />
           {showMore ? (
-            <Row size={75}>
+            <Row>
               <Col>
                 <Text style={styles.descriptionText}>
                   {description}
@@ -66,6 +87,23 @@ export default function PodcastReview ({ route, navigation }) {
               </Col>
             </Row>
           ) : null}
+          <Row>
+            <Col>
+              <Text style={styles.episodeHeader}>Episodes:</Text>
+              <FlatList
+                data={DATA}
+                initialNumToRender={5}
+                renderItem={({ item }) => (
+                  <View style={styles.listItem}>
+                    <Text style={styles.episodeName}>{item.title.substring(0, 35)}...</Text>
+                    <Text>{new XDate(item.published).toString('d MMM yyyy')} - {item.itunes.duration}</Text>
+                    {/* <Text>{Date.parse(item.published)}</Text> */}
+                    <Divider style={styles.episodeDivider} />
+                  </View>
+                )}
+              />
+            </Col>
+          </Row>
         </Grid>
       </View>
     </PaperProvider>
