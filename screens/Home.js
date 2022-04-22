@@ -1,5 +1,5 @@
 import React from "react"
-import {Text, View, ImageBackground} from "react-native" 
+import {Text, ScrollView, ImageBackground} from "react-native" 
 import { Provider as PaperProvider, useTheme, List, Divider } from 'react-native-paper'
 import styles from '../styles/styles'
 import theme from '../styles/Theme'
@@ -13,8 +13,10 @@ export default function Home() {
 
   return (
       <PaperProvider theme={theme}>
+          
            <ImageBackground source={image} resizeMode="cover" style={styles.image}></ImageBackground>
-        <List.Section title="Upcoming broadcasts">
+           <ScrollView>
+        <List.Section title="Upcoming broadcasts" titleStyle={styles.textAccordion}>
           <List.Accordion
             titleNumberOfLines={3}
             title="Sunday 17 April 2022  - 7:00 to 11:00"
@@ -40,7 +42,7 @@ export default function Home() {
           </List.Accordion>
           </List.Section>
 
-          <List.Section title="News">
+          <List.Section title="News" titleStyle={styles.textAccordion}>
           <List.Accordion
             titleNumberOfLines={3}
             title="Help me out"
@@ -74,6 +76,7 @@ export default function Home() {
             <List.Item title="Second item" />
           </List.Accordion> */}
         </List.Section>
+        </ScrollView>
       </PaperProvider>
   )
 }

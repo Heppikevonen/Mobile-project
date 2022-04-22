@@ -215,8 +215,9 @@ export default StyleSheet.create({
     maxHeight: '30%'
 }, 
   textAccordion: {
-    alignContent: 'center',
+    //textAlign: 'center',
     fontWeight: 'bold',
+    fontSize: 22,
   }
 
 })
