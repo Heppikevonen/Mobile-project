@@ -210,14 +210,31 @@ export default StyleSheet.create({
     padding: 5,
 }, 
   image: {
-    flex: 1,
+    //flex: 1,
     justifyContent: "center",
-    maxHeight: '30%'
+    height: 230,
+    //maxHeight: '100%'
 }, 
   textAccordion: {
     //textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 22,
+  }, 
+  textImage: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 22,
+  }, 
+  buttonSmall: {
+    borderRadius: 20, 
+    width: 135, 
+    height: 45, 
+    marginLeft: 100, 
+    alignContent: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    position: 'relative',
+    
   }
 
 })

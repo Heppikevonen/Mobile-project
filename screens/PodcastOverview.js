@@ -246,9 +246,7 @@ export default function PodcastOverview({navigation}) {
             onChangeValue={(value) => {
               orderByFunction(value);
             }}
-            onClose={(value) => {
-              orderByFunction(value);
-            }}
+            
            
             //zIndex={1000}
           />

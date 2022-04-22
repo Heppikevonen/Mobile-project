@@ -1,6 +1,6 @@
 import React from "react"
-import {Text, ScrollView, ImageBackground} from "react-native" 
-import { Provider as PaperProvider, useTheme, List, Divider } from 'react-native-paper'
+import {Text, ScrollView, ImageBackground, View} from "react-native" 
+import { Provider as PaperProvider, useTheme, List, Divider, Button } from 'react-native-paper'
 import styles from '../styles/styles'
 import theme from '../styles/Theme'
 
@@ -9,12 +9,33 @@ export default function Home() {
     const [expanded, setExpanded] = React.useState(true);
     const handlePress = () => setExpanded(!expanded);
 
-    const image = { uri: "https://reactjs.org/logo-og.png" };
+    const image = { uri: "https://runner-radio.de/wp-content/uploads/2022/02/one-run-one-book.jpg" };
+    const image2 = { uri: "https://runner-radio.de/wp-content/uploads/2022/02/strandlauf.jpg" };
 
   return (
       <PaperProvider theme={theme}>
+          {/* <View style={styles.container}>  */}
           
-           <ImageBackground source={image} resizeMode="cover" style={styles.image}></ImageBackground>
+           <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+            <Text style={[styles.textImage, {color: colors.onPrimary}]}>
+                The broadcast is not live. {"\n"}
+                Next broadcast on 17th of April. 
+            </Text>
+            
+            <View>
+            <Button 
+                //icon="music" 
+                mode="contained" 
+                onPress={() => console.log('Pressed')}
+                disabled={false}
+                uppercase={false}
+                style={styles.buttonSmall}
+                
+                >
+                Listen now
+            </Button>
+            </View>
+           </ImageBackground>
            <ScrollView>
         <List.Section title="Upcoming broadcasts" titleStyle={styles.textAccordion}>
           <List.Accordion
@@ -77,6 +98,7 @@ export default function Home() {
           </List.Accordion> */}
         </List.Section>
         </ScrollView>
+        {/* </View> */}
       </PaperProvider>
   )
 }
