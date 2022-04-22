@@ -23,8 +23,8 @@ const StackNavigator = () => {
         cardStyle:{ backgroundColor: theme.colors.surface}
       }}
     >
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Song Request" component={SongRequest} />
+      {/* <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Song Request" component={SongRequest} /> */}
       <Stack.Screen name="Podcasts" component={PodcastOverview} />
       <Stack.Screen
         name="podcastreview"
