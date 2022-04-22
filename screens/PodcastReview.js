@@ -4,7 +4,8 @@ import {
   BackHandler,
   Pressable,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {
@@ -72,19 +73,21 @@ export default function PodcastReview ({ route, navigation }) {
           </Row>
           {showMore ? (
             <Row>
-              <Col>
-                <Text style={styles.descriptionText}>
-                  {description}
-                  <Pressable
-                    style={styles.showMoreButton}
-                    onPress={() => setShowMore(!showMore)}
-                  >
-                    <Text style={styles.showMoreText}>
-                      {showMore ? 'Show less' : null}
-                    </Text>
-                  </Pressable>
-                </Text>
-              </Col>
+              <ScrollView>
+                <Col>
+                  <Text style={styles.descriptionText}>
+                    {description}
+                    <Pressable
+                      style={styles.showMoreButton}
+                      onPress={() => setShowMore(!showMore)}
+                    >
+                      <Text style={styles.showMoreText}>
+                        {showMore ? 'Show less' : null}
+                      </Text>
+                    </Pressable>
+                  </Text>
+                </Col>
+              </ScrollView>
             </Row>
           ) : null}
           <Row>
