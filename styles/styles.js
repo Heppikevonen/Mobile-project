@@ -195,5 +195,18 @@ export default StyleSheet.create({
   },
   listItem: {
     height: 80
-  }
+  },
+  dropDown: {
+    marginTop: 20, 
+    marginBottom: 5,
+  }, 
+  scrollView: {
+    marginTop: 100,
+  }, 
+  searchBox: {
+    marginBottom: 20,
+    borderColor: '#333',
+    borderWidth: 1,
+    padding: 5,
+}
 })
