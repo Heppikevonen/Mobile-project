@@ -66,7 +66,7 @@ export default function PodcastReview ({ route, navigation }) {
                     </Pressable>
                   </>
                 ) : (
-                  description.substring(0, 175)
+                  <Text>{!showMore ? description.substring(0, 175) : null}</Text>
                 )}
               </Text>
             </Col>
