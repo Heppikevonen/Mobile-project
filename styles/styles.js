@@ -181,7 +181,8 @@ export default StyleSheet.create({
   },
   episodeHeader: {
     fontSize: 30,
-    marginBottom: 10
+    marginBottom: 10,
+    color: 'black'
   },
   episodeName: {
     color: 'black',
