@@ -83,7 +83,8 @@ export default function PodcastOverview({navigation}) {
                   imageUrl: `${rss.image.url}`, 
                   author: `${rss.authors}`, 
                   description: `${rss.description}`,
-                  category: Object.values(data)[i].category}]);
+                  category: Object.values(data)[i].category, 
+                  items: rss.items}]);
                 
               })
               
@@ -97,6 +98,7 @@ export default function PodcastOverview({navigation}) {
       );
       
     }
+    //orderByFunction();
     }, []);
 
     //console.log(dataRSSFeed);
@@ -126,7 +128,8 @@ export default function PodcastOverview({navigation}) {
 
     
 
-    const orderByFunction = () => {
+    const orderByFunction = (orderBy) => {
+      console.log(orderBy);
       if (orderBy === '3'){
         dataSearch.sort(function(a, b) {
           if(a.routes) return 1;
@@ -135,8 +138,10 @@ export default function PodcastOverview({navigation}) {
           if(a.title.toLowerCase() > b.title.toLowerCase()) return -1;
           return 0;
         });
-        //executeSearch('');
+        //executeSearch('');+
+        //setDataSearch([]);
         //setDataSearch(order);
+        
         
         
       } else if (orderBy === '2') {
@@ -148,11 +153,14 @@ export default function PodcastOverview({navigation}) {
           return 0;
         });
         //executeSearch('');
+        //setDataSearch([]);
         //setDataSearch(order);
         
          
       } else {
         dataSearch.sort(function(a, b){return 0.5 - Math.random()});
+        //setDataSearch([]);
+        //setDataSearch(order);
       }
 
     }
@@ -220,13 +228,14 @@ export default function PodcastOverview({navigation}) {
         //onIconPress={executeSearch('')}
       ></Search>
 
-      
+
       <Grid>
         <Row>
           <Col size={45}>
             
-          <View style={styles.dropDown}>
             
+          <View style={styles.dropDown}>
+          
           <DropDownPicker
             open={showDropDownOrderBy}
             value={orderBy}
@@ -234,7 +243,12 @@ export default function PodcastOverview({navigation}) {
             setOpen={setShowDropDownOrderBy}
             setValue={setOrderBy}
             setItems={setOrderByList}
-            onChangeValue={orderByFunction}
+            onChangeValue={(value) => {
+              orderByFunction(value);
+            }}
+            
+           
+            //zIndex={1000}
           />
             </View>
           </Col>
@@ -252,6 +266,7 @@ export default function PodcastOverview({navigation}) {
             setValue={setFilter}
             setItems={setFilterList}
             onChangeValue={executeFilter}
+            
           />
            
             </View>
@@ -269,7 +284,7 @@ export default function PodcastOverview({navigation}) {
               <Row key={row} id={row}>
                 {row.map(col => (
                 <Col key={col} id={col}>
-                  <Pressable onPress={() => navigation.navigate('podcastreview', {image: dataSearch[col].imageUrl, title: dataSearch[col].title, description: dataSearch[col].description, items: dataRSSFeed[col].items})}>
+                  <Pressable onPress={() => navigation.navigate('podcastreview', {image: dataSearch[col].imageUrl, title: dataSearch[col].title, description: dataSearch[col].description, items: dataSearch[col].items})}>
                     <Image style={styles.tinyLogo} source={{uri: `${dataSearch[col].imageUrl}`}}></Image>
                     <Text style={[styles.podcastHeadline, { color: colors.accent }]} numberOfLines={3}> {dataSearch[col].title}</Text>
                   </Pressable>
