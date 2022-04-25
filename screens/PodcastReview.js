@@ -3,8 +3,6 @@ import {
   Image,
   BackHandler,
   Pressable,
-  FlatList,
-  TouchableOpacity,
   ScrollView
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
@@ -17,7 +15,7 @@ import {
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import theme from '../styles/Theme'
 import styles from '../styles/styles'
-import XDate from 'xdate'
+import EpisodeList from '../components/EpisodeList'
 
 export default function PodcastReview ({ route, navigation }) {
   const { image, description, items } = route.params
@@ -40,8 +38,6 @@ export default function PodcastReview ({ route, navigation }) {
   function dateFormat(date) {
 
   }
-
-  console.log(items)
 
   return (
     <PaperProvider theme={theme}>
@@ -92,19 +88,7 @@ export default function PodcastReview ({ route, navigation }) {
           ) : null}
           <Row>
             <Col>
-              <Text style={styles.episodeHeader}>Episodes:</Text>
-              <FlatList
-                data={DATA}
-                initialNumToRender={5}
-                renderItem={({ item }) => (
-                  <View style={styles.listItem}>
-                    <Text style={styles.episodeName}>{item.title.substring(0, 35)}...</Text>
-                    <Text>{new XDate(item.published).toString('d MMM yyyy')} - {item.itunes.duration}</Text>
-                    {/* <Text>{Date.parse(item.published)}</Text> */}
-                    <Divider style={styles.episodeDivider} />
-                  </View>
-                )}
-              />
+              <EpisodeList data={DATA} initialNumToRender={5} />
             </Col>
           </Row>
         </Grid>
