@@ -102,15 +102,16 @@ const createOneButtonAlert = () => Alert.alert (
             onChangeText={setReason}
             style={styles.textInput}
             //multiline='true'
-            //numberOfLines={5}
+            numberOfLines={5}
           />
           <Button
             mode='contained'
+            style={styles.buttonSmall}
             //icon='submit'
             onPress={submit}
           >Submit
           </Button>
-        </ScrollView>
+         </ScrollView>
       </View>
     </PaperProvider>
   )

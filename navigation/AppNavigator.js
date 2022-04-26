@@ -9,6 +9,8 @@ import styles from "../styles/styles";
 import PodcastReview from "../screens/PodcastReview";
 import theme from "../styles/Theme";
 import Home from "../screens/Home";
+import {Image} from "react-native" 
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -22,9 +24,7 @@ const StackNavigator = () => {
         headerTitleAlign: 'center',
         cardStyle:{ backgroundColor: theme.colors.surface}
       }}
-    >
-      {/* <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Song Request" component={SongRequest} /> */}
+    >   
       <Stack.Screen name="Podcasts" component={PodcastOverview} />
       <Stack.Screen
         name="podcastreview"
@@ -34,6 +34,34 @@ const StackNavigator = () => {
           title: "podcastname",
         })}
       />
+    </Stack.Navigator>
+  );
+};
+
+const HomeStackNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: theme.colors.surface2},
+        headerTintColor: theme.colors.onSurface,
+        headerTitleAlign: 'center',
+        cardStyle:{ backgroundColor: theme.colors.surface}
+      }}
+    >      
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ 
+          headerTitle: (props) => ( // App Logo
+          <Image
+            style={{ width: 230, height: 50 }}
+            source={require('../assets/images/logo.png')}
+            resizeMode='contain'
+          />
+    ),
+    headerTitleStyle: { flex: 1, textAlign: 'center' },
+    }}
+  />
     </Stack.Navigator>
   );
 };
@@ -51,7 +79,7 @@ const AppNavigator = () => {
     >
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStackNavigator}
         options={{
           tabBarIcon: (color) => <Entypo name="home" size={24} color={color} />,
         }}

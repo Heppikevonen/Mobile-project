@@ -213,7 +213,8 @@ export default StyleSheet.create({
   image: {
     //flex: 1,
     justifyContent: "center",
-    height: 230,
+    alignItems: 'center',
+    height: 210,
     //maxHeight: '100%'
 }, 
   textAccordion: {
@@ -230,12 +231,12 @@ export default StyleSheet.create({
     borderRadius: 20, 
     width: 135, 
     height: 45, 
-    marginLeft: 100, 
     alignContent: 'center',
     justifyContent: 'center',
-    marginTop: 20,
-    position: 'relative',
-    
-  }
-
+    marginTop: 20, 
+  }, 
+  center: {
+    alignContent: 'center',
+    //justifyContent: 'center',
+  },
 })

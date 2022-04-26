@@ -227,6 +227,8 @@ export default function PodcastOverview({navigation}) {
         executeSearch={executeSearch}
         //onIconPress={executeSearch('')}
       ></Search>
+      
+
 
 
       <Grid>
@@ -247,6 +249,7 @@ export default function PodcastOverview({navigation}) {
               orderByFunction(value);
             }}
             
+            
            
             //zIndex={1000}
           />
@@ -266,6 +269,7 @@ export default function PodcastOverview({navigation}) {
             setValue={setFilter}
             setItems={setFilterList}
             onChangeValue={executeFilter}
+            
             
           />
            
