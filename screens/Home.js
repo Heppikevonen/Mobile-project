@@ -53,9 +53,12 @@ export default function Home({navigation}) {
                 //icon="music" 
                 mode="contained" 
                 onPress={() => navigation.navigate('Player')}
-                disabled={header.buttonActive}
+                disabled={header.disabled}
                 uppercase={false}
-                style={styles.buttonSmall}
+                //style={styles.buttonSmall}
+                style={header.disabled? styles.buttonSmallDisabled : styles.buttonSmall}
+                //color={header.buttonActive ? 'orange' : 'grey'}
+                dark={true}
                 >
                 Listen now
             </Button>

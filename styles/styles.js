@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions, StatusBar, Platform } from 'react-native'
 import Constants from 'expo-constants'
+import theme from './Theme'
 
 export default StyleSheet.create({
   container: {
@@ -234,6 +235,17 @@ export default StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     marginTop: 20, 
+    backgroundColor: theme.colors.primary
+  }, 
+  buttonSmallDisabled: {
+    borderRadius: 20, 
+    width: 135, 
+    height: 45, 
+    alignContent: 'center',
+    justifyContent: 'center',
+    marginTop: 20, 
+    backgroundColor: theme.colors.neutral80, opacity: 0.87
+    
   }, 
   center: {
     alignContent: 'center',
