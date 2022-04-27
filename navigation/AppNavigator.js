@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import PodcastOverview from "../screens/PodcastOverview";
 import RadioPlayer from "../screens/RadioPlayer";
 import SongRequest from "../screens/SongRequest";
+import Information from "../screens/Information";
 import { MaterialIcons, Ionicons, Entypo } from "@expo/vector-icons";
 import styles from "../styles/styles";
 import PodcastReview from "../screens/PodcastReview";
@@ -14,16 +15,23 @@ import {Image} from "react-native"
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const screenOptionsStyle = {
+  headerStyle: { backgroundColor: theme.colors.surface2 },
+  headerTintColor: theme.colors.onSurface,
+  headerTitleAlign: "center",
+  cardStyle: { backgroundColor: theme.colors.surface },
+};
+const tabOptionsStyle = {
+  tabBarStyle: { backgroundColor: theme.colors.surface2, height: 70 },
+  tabBarLabelStyle: { paddingBottom: 10, color: theme.colors.onSurface },
+  tabBarActiveBackgroundColor: theme.colors.surfaceVariant,
+  headerShown: false,
+};
 
 const StackNavigator = () => {
   return (
     <Stack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: theme.colors.surface2},
-        headerTintColor: theme.colors.onSurface,
-        headerTitleAlign: 'center',
-        cardStyle:{ backgroundColor: theme.colors.surface}
-      }}
+      screenOptions={screenOptionsStyle}
     >   
       <Stack.Screen name="Podcasts" component={PodcastOverview} />
       <Stack.Screen
@@ -34,6 +42,7 @@ const StackNavigator = () => {
           title: "podcastname",
         })}
       />
+      
     </Stack.Navigator>
   );
 };
@@ -41,12 +50,7 @@ const StackNavigator = () => {
 const HomeStackNavigator = () => {
   return (
     <Stack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: theme.colors.surface2},
-        headerTintColor: theme.colors.onSurface,
-        headerTitleAlign: 'center',
-        cardStyle:{ backgroundColor: theme.colors.surface}
-      }}
+      screenOptions={screenOptionsStyle}
     >      
       <Stack.Screen
         name="Home"
@@ -66,16 +70,22 @@ const HomeStackNavigator = () => {
   );
 };
 
+const InfoStackNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={screenOptionsStyle}>
+      <Stack.Screen
+        name="Information"
+        component={Information}
+        options={{ headerTitle: "Information" }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 const AppNavigator = () => {
   return (
     <Tab.Navigator
-      style={styles.bottomSection} //What is this style used for? I dont think it does anything
-      screenOptions={{
-        tabBarStyle: { backgroundColor: theme.colors.surface2, height: 70 },
-        tabBarLabelStyle: { paddingBottom: 10, color: theme.colors.onSurface },
-        tabBarActiveBackgroundColor: theme.colors.surfaceVariant,
-        headerShown: false,
-      }}
+      screenOptions={tabOptionsStyle}
     >
       <Tab.Screen
         name="Home"
@@ -119,7 +129,7 @@ const AppNavigator = () => {
       />
       <Tab.Screen
         name="Information"
-        component={SongRequest}
+        component={InfoStackNavigator}
         options={{
           tabBarIcon: () => (
             <Ionicons

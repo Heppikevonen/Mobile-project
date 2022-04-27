@@ -251,4 +251,8 @@ export default StyleSheet.create({
     alignContent: 'center',
     //justifyContent: 'center',
   },
+  textMediumBody:{
+    color: theme.colors.onSurface,
+    fontSize: 12,
+  }
 })
