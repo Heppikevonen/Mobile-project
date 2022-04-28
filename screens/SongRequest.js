@@ -1,61 +1,87 @@
-import React, { useState } from 'react';
-import { Text, View, ScrollView, Alert } from 'react-native';
-import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-native-paper';
-import styles from '../styles/styles';
-import theme from '../styles/Theme';
-import {db, ROOT_REF_SONG_REQUESTS} from '../firebase/Config';
+import React, { useState } from "react";
+import { Text, View, ScrollView, Alert } from "react-native";
+import {
+  Provider as PaperProvider,
+  Button,
+  TextInput,
+  useTheme,
+} from "react-native-paper";
+import styles from "../styles/styles";
+import theme from "../styles/Theme";
+import { db, ROOT_REF_SONG_REQUESTS } from "../firebase/Config";
 
 const SongRequest = () => {
-
   const { colors } = useTheme(theme);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [songName, setSongName] = useState('');
-  const [reason, setReason] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [songName, setSongName] = useState("");
+  const [reason, setReason] = useState("");
+  const [error, setError] = useState("No error");
+  const [isValid, setIsValid] = useState(false);
 
   const submit = () => {
-    if(firstName.trim() && lastName.trim() && email.trim() && songName.trim() && reason.trim() !== ""  ) {
-    db.ref(ROOT_REF_SONG_REQUESTS).push({
-            Firstname: firstName,
-            Lastname: lastName,
-            Email: email,
-            Songname: songName,
-            Reason: reason,
-    });
-    setFirstName('');
-    setLastName('');
-    setEmail('');
-    setSongName('');
-    setReason('');
-  } else {
-    createOneButtonAlert();
+    if (
+      firstName.trim() &&
+      lastName.trim() &&
+      email.trim() &&
+      songName.trim() &&
+      reason.trim() !== ""
+    ) {
+      if (isValid) {
+        // db.ref(ROOT_REF_SONG_REQUESTS).push({
+        //         Firstname: firstName,
+        //         Lastname: lastName,
+        //         Email: email,
+        //         Songname: songName,
+        //         Reason: reason,
+        // });
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setSongName("");
+        setReason("");
+        setError("No error");
+      } else {
+        setError(
+          "The emailadress is not correct, please fill in a correct emailadress."
+        );
+      }
+    } else {
+      setError("Not all fields are filled in, anwser all the fields.");
+    }
+    if (error !== "No error") {
+      // createOneButtonAlert();
+      console.log(error);
+    } else console.log("All is fine, no error");
+  };
 
-  }
-};
-
-const createOneButtonAlert = () => Alert.alert (
-  "Invalid values","Please check your data and try it again", 
-  {
-    text: "Ok",
-    onPress: () => console.log("Ok pressed"),
-  },
-  {cancelable: false}
-)
+  const createOneButtonAlert = () =>
+    Alert.alert(
+      "Invalid values",
+      "Please check your data and try it again",
+      {
+        text: "Ok",
+        onPress: () => console.log("Ok pressed"),
+      },
+      { cancelable: false }
+    );
 
   const validate = (text) => {
     console.log(text);
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (reg.test(text) === false) {
+    if (!reg.test(text)) {
+      setEmail(text);
+      setIsValid(false);
       console.log("Email is Not Correct");
-      this.setEmail(text);
       return false;
-    }
-    else {
-      this.setEmail(text);
+    } else {
+      setEmail(text);
+      setIsValid(true);
       console.log("Email is Correct");
+      return true;
     }
-  }
+  };
 
   return (
     <PaperProvider theme={theme}>
@@ -90,7 +116,7 @@ const createOneButtonAlert = () => Alert.alert (
             mode="outlined"
             keyboardType="email-address"
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(text) => validate(text)}
             style={styles.textInput}
           />
           <TextInput
@@ -113,7 +139,10 @@ const createOneButtonAlert = () => Alert.alert (
           />
           <Button
             mode="contained"
-            style={[styles.buttonSmall, {alignSelf: 'center', marginBottom: 5}]}
+            style={[
+              styles.buttonSmall,
+              { alignSelf: "center", marginBottom: 5 },
+            ]}
             //icon='submit'
             onPress={submit}
             dark={true}
@@ -124,10 +153,6 @@ const createOneButtonAlert = () => Alert.alert (
       </View>
     </PaperProvider>
   );
-}
+};
 
-export default SongRequest
-
-
-
-
+export default SongRequest;
