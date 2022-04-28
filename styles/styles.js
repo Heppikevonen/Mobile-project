@@ -260,6 +260,11 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: "row",
   },
+  textLargeLabel: {
+    color: theme.colors.onSurface,
+    fontWeight: "bold",
+    fontSize: 16,
+  },
   textMediumTitle: {
     color: theme.colors.onSurface,
     fontWeight: "bold",

@@ -80,7 +80,7 @@ const InfoStackNavigator = () => {
 
 const SongRequestNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ screenOptionsStyle }}>
+    <Stack.Navigator screenOptions={ screenOptionsStyle}>
       <Stack.Screen
         name="Songrequest"
         component={SongRequest}

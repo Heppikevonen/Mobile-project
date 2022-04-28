@@ -60,44 +60,51 @@ const createOneButtonAlert = () => Alert.alert (
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
-        <ScrollView >
+        <ScrollView>
+          <Text style={[styles.textLargeLabel, { alignSelf: "center" }]}>
+            Do you want to hear a specific song on the show?
+          </Text>
+          <Text style={[styles.textMediumBody, { alignSelf: "center" }]}>
+            Feel free to fill in the form below with the song you would love to
+            hear on the show. If it fits in the program you might hear your
+            favorite song on Radio Runner.
+          </Text>
           <TextInput
-            label='First name'
-            mode='outlined'
-            keyboardType='default'
+            label="First name"
+            mode="outlined"
+            keyboardType="default"
             value={firstName}
             onChangeText={setFirstName}
             style={styles.textInput}
           />
           <TextInput
-            label='Last name'
-            mode='outlined'
-            keyboardType='default'
+            label="Last name"
+            mode="outlined"
+            keyboardType="default"
             value={lastName}
             onChangeText={setLastName}
             style={styles.textInput}
           />
           <TextInput
-            label='Email address'
-            mode='outlined'
-            keyboardType='email-address'
+            label="Email address"
+            mode="outlined"
+            keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
             style={styles.textInput}
-            
           />
           <TextInput
-            label='Songname and artist'
-            mode='outlined'
-            keyboardType='default'
+            label="Songname and artist"
+            mode="outlined"
+            keyboardType="default"
             value={songName}
             onChangeText={setSongName}
             style={styles.textInput}
           />
           <TextInput
-            label='Reason for song'
-            mode='outlined'
-            keyboardType='default'
+            label="Reason for song"
+            mode="outlined"
+            keyboardType="default"
             value={reason}
             onChangeText={setReason}
             style={styles.textInput}
@@ -105,16 +112,18 @@ const createOneButtonAlert = () => Alert.alert (
             numberOfLines={5}
           />
           <Button
-            mode='contained'
-            style={styles.buttonSmall}
+            mode="contained"
+            style={[styles.buttonSmall, {alignSelf: 'center', marginBottom: 5}]}
             //icon='submit'
             onPress={submit}
-          >Submit
+            dark={true}
+          >
+            Submit
           </Button>
-         </ScrollView>
+        </ScrollView>
       </View>
     </PaperProvider>
-  )
+  );
 }
 
 export default SongRequest
