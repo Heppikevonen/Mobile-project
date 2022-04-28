@@ -10,8 +10,7 @@ import styles from "../styles/styles";
 import PodcastReview from "../screens/PodcastReview";
 import theme from "../styles/Theme";
 import Home from "../screens/Home";
-import {Image} from "react-native" 
-
+import { Image } from "react-native";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -30,9 +29,7 @@ const tabOptionsStyle = {
 
 const StackNavigator = () => {
   return (
-    <Stack.Navigator
-      screenOptions={screenOptionsStyle}
-    >   
+    <Stack.Navigator screenOptions={screenOptionsStyle}>
       <Stack.Screen name="Podcasts" component={PodcastOverview} />
       <Stack.Screen
         name="podcastreview"
@@ -42,30 +39,29 @@ const StackNavigator = () => {
           title: "podcastname",
         })}
       />
-      
     </Stack.Navigator>
   );
 };
 
 const HomeStackNavigator = () => {
   return (
-    <Stack.Navigator
-      screenOptions={screenOptionsStyle}
-    >      
+    <Stack.Navigator screenOptions={screenOptionsStyle}>
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{ 
-          headerTitle: (props) => ( // App Logo
-          <Image
-            style={{ width: 230, height: 50 }}
-            source={require('../assets/images/logo.png')}
-            resizeMode='contain'
-          />
-    ),
-    headerTitleStyle: { flex: 1, textAlign: 'center' },
-    }}
-  />
+        options={{
+          headerTitle: (
+            props // App Logo
+          ) => (
+            <Image
+              style={{ width: 230, height: 50 }}
+              source={require("../assets/images/logo.png")}
+              resizeMode="contain"
+            />
+          ),
+          headerTitleStyle: { flex: 1, textAlign: "center" },
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -80,18 +76,29 @@ const InfoStackNavigator = () => {
       />
     </Stack.Navigator>
   );
-}
+};
+
+const SongRequestNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ screenOptionsStyle }}>
+      <Stack.Screen
+        name="Songrequest"
+        component={SongRequest}
+        options={{ headerTitle: "Song Request" }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const AppNavigator = () => {
   return (
-    <Tab.Navigator
-      screenOptions={tabOptionsStyle}
-    >
+    <Tab.Navigator screenOptions={tabOptionsStyle}>
       <Tab.Screen
-        name="Home"
+        name="HomeTab"
         component={HomeStackNavigator}
         options={{
           tabBarIcon: (color) => <Entypo name="home" size={24} color={color} />,
+          tabBarLabel: "Home",
         }}
       />
       <Tab.Screen
@@ -102,7 +109,7 @@ const AppNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Podcasts"
+        name="PodcastsTab"
         component={StackNavigator}
         options={{
           tabBarIcon: () => (
@@ -112,11 +119,12 @@ const AppNavigator = () => {
               color={theme.colors.onSurface}
             />
           ),
+          tabBarLabel: "Podcasts",
         }}
       />
       <Tab.Screen
-        name="Song request"
-        component={SongRequest}
+        name="SongRequestTab"
+        component={SongRequestNavigator}
         options={{
           tabBarIcon: () => (
             <Ionicons
@@ -125,10 +133,11 @@ const AppNavigator = () => {
               color={theme.colors.onSurface}
             />
           ),
+          tabBarLabel: "Song Request",
         }}
       />
       <Tab.Screen
-        name="Information"
+        name="InformationTab"
         component={InfoStackNavigator}
         options={{
           tabBarIcon: () => (
@@ -138,6 +147,7 @@ const AppNavigator = () => {
               color="black"
             />
           ),
+          tabBarLabel: "Information",
         }}
       />
     </Tab.Navigator>
