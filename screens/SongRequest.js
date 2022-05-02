@@ -4,6 +4,8 @@ import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-na
 import styles from '../styles/styles';
 import theme from '../styles/Theme';
 import {db, ROOT_REF_SONG_REQUESTS} from '../firebase/Config';
+import { AntDesign } from '@expo/vector-icons';
+
 
 const SongRequest = () => {
 
@@ -28,34 +30,70 @@ const SongRequest = () => {
     setEmail('');
     setSongName('');
     setReason('');
+    Alert.alert(
+      "Thank you!",
+      "Your song request has been successfully submitted. If it fits the show, you might hear it soon. Stay tuned and keep running :)",
+      [
+        { text: "OK" }
+      ]
+    );
   } else {
-    createOneButtonAlert();
+    Alert.alert(
+      "Missing information",
+      "There are some necessary information missing. Please check the form again!",
+      [
+        { text: "OK", colors: 'orange' }
+      ]
+    );
 
   }
 };
 
-const createOneButtonAlert = () => Alert.alert (
-  "Invalid values","Please check your data and try it again", 
-  {
-    text: "Ok",
-    onPress: () => console.log("Ok pressed"),
-  },
-  {cancelable: false}
-)
 
-  const validate = (text) => {
-    console.log(text);
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (reg.test(text) === false) {
-      console.log("Email is Not Correct");
-      this.setEmail(text);
-      return false;
-    }
-    else {
-      this.setEmail(text);
-      console.log("Email is Correct");
-    }
+ const validate = val => {
+  console.log(val);
+  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+  if (val.length === 0) {
+    Alert.alert(
+      "Email address must be entered",
+      "Please fill in your email address",
+      [
+        { text: "OK" }
+      ]
+    );
+  } else if (reg.test(val) === false) {
+    Alert.alert(
+      "Invalid Email",
+      "Please enter a valid email address",
+      [
+        { text: "OK" }
+      ]
+    );
+  } else if (reg.test(val) === true) {
+    setEmail(val); 
   }
+  };
+
+
+
+
+//   if (reg.test(text) === false) {
+//     console.log("Email is Not Correct");
+//     Alert.alert(
+//       "Invalid email",
+//       "Your email address is not correct. Please try it again.",
+//       [
+//         { text: "OK", onPress: () => console.log("OK Pressed") }
+//       ]
+//     );
+//     return false;
+//   }
+//   else {
+//     setEmail(text);
+//     console.log("Email is Correct");
+//   }
+// }
 
   return (
     <PaperProvider theme={theme}>
@@ -76,6 +114,11 @@ const createOneButtonAlert = () => Alert.alert (
             value={firstName}
             onChangeText={setFirstName}
             style={styles.textInput}
+            right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setFirstName('')} />}
+            // right={<TextInput.Icon name={<AntDesign name="closecircleo"/>} onPress={() => setFirstName('')} />}
+            // <AntDesign name="closecircleo" size={24} color="black" />
+            
+            
           />
           <TextInput
             label="Last name"
@@ -91,6 +134,9 @@ const createOneButtonAlert = () => Alert.alert (
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
+            // onSubmitEditing={value => 
+            //   validate(value)
+            // }
             style={styles.textInput}
           />
           <TextInput
@@ -113,7 +159,7 @@ const createOneButtonAlert = () => Alert.alert (
           />
           <Button
             mode="contained"
-            style={[styles.buttonSmall, {alignSelf: 'center', marginBottom: 5}]}
+            style={[styles.buttonSmall, {alignSelf: 'center', marginBottom: 30}]}
             //icon='submit'
             onPress={submit}
             dark={true}
