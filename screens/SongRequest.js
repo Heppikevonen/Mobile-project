@@ -19,8 +19,14 @@ const SongRequest = () => {
   const [reason, setReason] = useState("");
   const [error, setError] = useState("No error");
   const [isValid, setIsValid] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+
+  useEffect(() => {
+    validate();
+  }, [isClicked])
 
   const submit = () => {
+    setIsClicked(true)
     if (
       firstName.trim() &&
       lastName.trim() &&
@@ -54,6 +60,7 @@ const SongRequest = () => {
       // createOneButtonAlert();
       console.log(error);
     } else console.log("All is fine, no error");
+    setIsClicked(false)
   };
 
   const createOneButtonAlert = () =>
@@ -116,7 +123,7 @@ const SongRequest = () => {
             mode="outlined"
             keyboardType="email-address"
             value={email}
-            onChangeText={(text) => validate(text)}
+            onChangeText={setEmail}
             style={styles.textInput}
           />
           <TextInput
