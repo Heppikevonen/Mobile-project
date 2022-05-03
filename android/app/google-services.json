@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "444533911736",
+    "firebase_url": "https://runnerradiorssfeed-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "runnerradiorssfeed",
+    "storage_bucket": "runnerradiorssfeed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444533911736:android:a8aa2b9916e998cc43844d",
+        "android_client_info": {
+          "package_name": "runner.radio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444533911736-t37sjf5lque554o1dg6edpd7knvabl7e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0G6CTGCrnhTgCRyxHj_KJs7KM_kMbt5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444533911736-t37sjf5lque554o1dg6edpd7knvabl7e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
