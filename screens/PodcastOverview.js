@@ -83,7 +83,6 @@ export default function PodcastOverview({ navigation }) {
   }, []);
 
   const orderByFunction = (dataOrderBy) => {
-    console.log(orderBy);
     if (orderBy === '3') {
       const order = dataOrderBy.sort(function (a, b) {
         if (a.routes) return 1;
@@ -124,11 +123,14 @@ export default function PodcastOverview({ navigation }) {
   const executeSearch = (search) => {
     const searchArray = dataRSSFeed.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()));
     setDataSearch(searchArray);
+    orderByFunction;
+    if (search === '') {
+      setFilter([]); 
+    }
   }
 
   const executeFilter = (filter) => {
     if (filter != '') {
-      console.log(filter);
       const filterArray = dataRSSFeed.filter(items => items.category.find(category => filter.includes(category)))
         .map(({ title, imageUrl, author, description, category }) => ({ title, imageUrl, author, description, category }));
       setDataSearch([]);
@@ -163,7 +165,7 @@ export default function PodcastOverview({ navigation }) {
                   setValue={setOrderBy}
                   setItems={setOrderByList}
                   onChangeValue={(value) => {
-                    orderByFunction(dataRSSFeed);
+                    orderByFunction(dataSearch);
                   }}
                 //zIndex={1000}
                 />

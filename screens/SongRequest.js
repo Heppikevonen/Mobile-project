@@ -9,6 +9,8 @@ import {
 import styles from "../styles/styles";
 import theme from "../styles/Theme";
 import { db, ROOT_REF_SONG_REQUESTS } from "../firebase/Config";
+import { AntDesign } from '@expo/vector-icons';
+
 
 const SongRequest = () => {
   const { colors } = useTheme(theme);
@@ -26,69 +28,83 @@ const SongRequest = () => {
   }, [isClicked])
 
   const submit = () => {
-    setIsClicked(true)
-    if (
-      firstName.trim() &&
-      lastName.trim() &&
-      email.trim() &&
-      songName.trim() &&
-      reason.trim() !== ""
-    ) {
-      if (isValid) {
-        // db.ref(ROOT_REF_SONG_REQUESTS).push({
-        //         Firstname: firstName,
-        //         Lastname: lastName,
-        //         Email: email,
-        //         Songname: songName,
-        //         Reason: reason,
-        // });
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setSongName("");
-        setReason("");
-        setError("No error");
-      } else {
-        setError(
-          "The emailadress is not correct, please fill in a correct emailadress."
-        );
-      }
-    } else {
-      setError("Not all fields are filled in, anwser all the fields.");
-    }
-    if (error !== "No error") {
-      // createOneButtonAlert();
-      console.log(error);
-    } else console.log("All is fine, no error");
-    setIsClicked(false)
-  };
-
-  const createOneButtonAlert = () =>
+    if(firstName.trim() && lastName.trim() && email.trim() && songName.trim() && reason.trim() !== ""  ) {
+    db.ref(ROOT_REF_SONG_REQUESTS).push({
+            Firstname: firstName,
+            Lastname: lastName,
+            Email: email,
+            Songname: songName,
+            Reason: reason,
+    });
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setSongName('');
+    setReason('');
     Alert.alert(
-      "Invalid values",
-      "Please check your data and try it again",
-      {
-        text: "Ok",
-        onPress: () => console.log("Ok pressed"),
-      },
-      { cancelable: false }
+      "Thank you!",
+      "Your song request has been successfully submitted. If it fits the show, you might hear it soon. Stay tuned and keep running :)",
+      [
+        { text: "OK" }
+      ]
+    );
+  } else {
+    Alert.alert(
+      "Missing information",
+      "There are some necessary information missing. Please check the form again!",
+      [
+        { text: "OK", colors: 'orange' }
+      ]
     );
 
-  const validate = (text) => {
-    console.log(text);
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (!reg.test(text)) {
-      setEmail(text);
-      setIsValid(false);
-      console.log("Email is Not Correct");
-      return false;
-    } else {
-      setEmail(text);
-      setIsValid(true);
-      console.log("Email is Correct");
-      return true;
-    }
+  }
+};
+
+
+ const validate = val => {
+  console.log(val);
+  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+  if (val.length === 0) {
+    Alert.alert(
+      "Email address must be entered",
+      "Please fill in your email address",
+      [
+        { text: "OK" }
+      ]
+    );
+  } else if (reg.test(val) === false) {
+    Alert.alert(
+      "Invalid Email",
+      "Please enter a valid email address",
+      [
+        { text: "OK" }
+      ]
+    );
+  } else if (reg.test(val) === true) {
+    setEmail(val); 
+  }
   };
+
+
+
+
+//   if (reg.test(text) === false) {
+//     console.log("Email is Not Correct");
+//     Alert.alert(
+//       "Invalid email",
+//       "Your email address is not correct. Please try it again.",
+//       [
+//         { text: "OK", onPress: () => console.log("OK Pressed") }
+//       ]
+//     );
+//     return false;
+//   }
+//   else {
+//     setEmail(text);
+//     console.log("Email is Correct");
+//   }
+// }
 
   return (
     <PaperProvider theme={theme}>
@@ -109,6 +125,11 @@ const SongRequest = () => {
             value={firstName}
             onChangeText={setFirstName}
             style={styles.textInput}
+            right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setFirstName('')} />}
+            // right={<TextInput.Icon name={<AntDesign name="closecircleo"/>} onPress={() => setFirstName('')} />}
+            // <AntDesign name="closecircleo" size={24} color="black" />
+            
+            
           />
           <TextInput
             label="Last name"
@@ -124,6 +145,9 @@ const SongRequest = () => {
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
+            // onSubmitEditing={value => 
+            //   validate(value)
+            // }
             style={styles.textInput}
           />
           <TextInput
@@ -146,10 +170,8 @@ const SongRequest = () => {
           />
           <Button
             mode="contained"
-            style={[
-              styles.buttonSmall,
-              { alignSelf: "center", marginBottom: 5 },
-            ]}
+
+            style={[styles.buttonSmall, {alignSelf: 'center', marginBottom: 30}]}
             //icon='submit'
             onPress={submit}
             dark={true}

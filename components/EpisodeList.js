@@ -7,12 +7,18 @@ import { Divider, Text } from 'react-native-paper'
 export default function EpisodeList ({ data, initialNumToRender }) {
 
   function durationFormatter (duration) {
-    let hours = parseInt(duration.substring(0, 2))
-    let minutes = parseInt(duration.substring(3, 5))
-    let seconds = parseInt(duration.substring(6, 8))
-    let formatted = Math.round(minutes + hours * 60 + seconds / 60)
-
-    return formatted
+    if (duration.length < 6) {
+      let minutes = parseInt(duration.substring(0, 2))
+      let seconds = parseInt(duration.substring(3, 4))
+      let formatted = Math.round(minutes + seconds / 60)
+      return formatted
+    } else {
+      let hours = parseInt(duration.substring(0, 2))
+      let minutes = parseInt(duration.substring(3, 5))
+      let seconds = parseInt(duration.substring(6, 8))
+      let formatted = Math.round(minutes + hours * 60 + seconds / 60)
+      return formatted
+    }
   }
 
   return (

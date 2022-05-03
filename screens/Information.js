@@ -154,7 +154,7 @@ export default function Information({ navigation }) {
               <Text
                 style={[
                   styles.runsBody,
-                  { width: 150, marginTop: 150, marginRight: 55 },
+                  { width: 150, marginTop: 140, marginRight: 60 },
                 ]}
               >
                 Can be anything: from a running party to surprise runs. As
