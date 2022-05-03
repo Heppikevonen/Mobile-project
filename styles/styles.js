@@ -170,7 +170,12 @@ export default StyleSheet.create({
     height: 200
   },
   descriptionText: {
+    // marginTop: 5,
+    // marginBottom: 5,
+  },
+  descriptionScroll: {
     marginTop: 5,
+    marginBottom: 10
   },
   smallDescription: {
     marginLeft: 10
