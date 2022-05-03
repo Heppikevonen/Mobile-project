@@ -6,6 +6,7 @@ import theme from '../styles/Theme'
 import { db, ROOT_REF_NEWS, ROOT_REF_UPCOMING_BROADCASTS, ROOT_REF_HEADER } from '../firebase/Config'
 
 export default function Home({navigation}) {
+  
     const { colors } = useTheme(theme);
     const [expanded, setExpanded] = React.useState(true);
     const [news, setNews] = useState([]); 
