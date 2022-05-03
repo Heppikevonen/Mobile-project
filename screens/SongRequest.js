@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, ScrollView, Alert } from "react-native";
 import {
   Provider as PaperProvider,
@@ -134,7 +134,7 @@ const SongRequest = () => {
             value={reason}
             onChangeText={setReason}
             style={styles.textInput}
-            //multiline='true'
+            multiline
             numberOfLines={5}
           />
           <Button
