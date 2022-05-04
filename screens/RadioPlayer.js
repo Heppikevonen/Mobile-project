@@ -23,7 +23,6 @@ class RadioPlayer extends Component {
 		this.isSeeking = false;
 		this.shouldPlayAtEndOfSeek = false;
 		this.playbackInstance = null;
-		// this.episode = props.route.params.episode
 		this.state = {
 			playbackInstanceTitle: null,
 			playbackInstanceAuthor: null,
@@ -37,11 +36,8 @@ class RadioPlayer extends Component {
 			volume: 1.0,
 			rate: 1.0,
 			image: null,
-			episode: props.route.params.episode
 		};
 	}
-
-	
 
 
 	async componentDidMount() {
@@ -83,7 +79,7 @@ class RadioPlayer extends Component {
 			this.playbackInstance = null;
 		}
 
-		const source = { uri: this.state.episode };
+		const source = { uri: PodcastPlaylist[this.index].uri };
 		const initialStatus = {
 			shouldPlay: playing,
 			rate: this.state.rate,
@@ -175,7 +171,6 @@ class RadioPlayer extends Component {
 			this._advanceIndex(true);
 			this._updatePlaybackInstanceForIndex(this.state.shouldPlay);
 		}
-		console.log(this.state.episode)
 	};
 
 	_onBackPressed = () => {
@@ -257,18 +252,20 @@ class RadioPlayer extends Component {
 			<View />
 		) : (
 			<SafeAreaView style={styles.containerPlayer}>
-				<View style={styles.imageContainer}>
+				<View style={styles.radioheader}>
+				<Text style={[styles.epTitle]}>
+						{this.state.playbackInstanceTitle}
+					</Text>
+				</View>
+					<View style={styles.imageContainer}>
 					<Image
-						style={styles.image}
+						style={styles.radioImg}
 						source={{
 						uri: this.state.image,
 						}}
 					/>
-				</View>
+					</View>
 				<View style={styles.detailsContainer}>
-					<Text style={[styles.text]}>
-						{this.state.playbackInstanceTitle}
-					</Text>
 					<Text style={[styles.text]}>
 						{this.state.playbackInstanceAuthor}
 					</Text>
@@ -291,8 +288,9 @@ class RadioPlayer extends Component {
 						onSlidingComplete={this._onSeekSliderSlidingComplete}
 						thumbStyle={ styles.sliderThumb }
 						trackStyle={ styles.sliderTrack }
-						minimumTrackTintColor="#EA5A00"
-						maximumTrackTintColor="#f0cbb4"
+						minimumTrackTintColor="#FFB594"
+						maximumTrackTintColor="#FFB594"
+						thumbTintColor='#F5620E'
 						disabled={this.state.isLoading}
 					/>
 				</View>
