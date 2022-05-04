@@ -24,7 +24,6 @@ class RadioPlayer extends Component {
 		this.isSeeking = false;
 		this.shouldPlayAtEndOfSeek = false;
 		this.playbackInstance = null;
-		// this.episode = props.route.params.episode
 		this.state = {
 			playbackInstanceTitle: null,
 			playbackInstanceAuthor: null,
@@ -38,11 +37,8 @@ class RadioPlayer extends Component {
 			volume: 1.0,
 			rate: 1.0,
 			image: null,
-			episode: props.route.params.episode
 		};
 	}
-
-	
 
 
 	async componentDidMount() {
@@ -77,7 +73,7 @@ class RadioPlayer extends Component {
 			this.playbackInstance = null;
 		}
 
-		const source = { uri: this.state.episode };
+		const source = { uri: PodcastPlaylist[this.index].uri };
 		const initialStatus = {
 			shouldPlay: playing,
 			rate: this.state.rate,
@@ -169,7 +165,6 @@ class RadioPlayer extends Component {
 			this._advanceIndex(true);
 			this._updatePlaybackInstanceForIndex(this.state.shouldPlay);
 		}
-		console.log(this.state.episode)
 	};
 
 	_onBackPressed = () => {
@@ -258,7 +253,7 @@ class RadioPlayer extends Component {
 				</View>
 					<View style={styles.imageContainer}>
 					<Image
-						style={styles.imagess}
+						style={styles.imagesss}
 						source={{
 						uri: this.state.image,
 						}}

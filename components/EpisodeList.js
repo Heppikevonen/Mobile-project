@@ -3,12 +3,8 @@ import styles from '../styles/styles'
 import React from 'react'
 import XDate from 'xdate'
 import { Divider, Text } from 'react-native-paper'
-import RadioPlayer from '../screens/RadioPlayer'
-import {useNavigation} from '@react-navigation/native'
 
 export default function EpisodeList ({ data, initialNumToRender }) {
-
-  const navigation = useNavigation()
 
   function durationFormatter (duration) {
     if (duration.length < 6) {
@@ -32,7 +28,7 @@ export default function EpisodeList ({ data, initialNumToRender }) {
         data={data}
         initialNumToRender={initialNumToRender}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('Player', { episode: item.enclosures[0].url})}>
+          <TouchableOpacity>
             <View style={styles.listItem}>
               <Text style={styles.episodeName}>
                 {item.title.substring(0, 35)}...
