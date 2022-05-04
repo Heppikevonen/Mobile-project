@@ -9,6 +9,7 @@ import { Audio } from 'expo-av';
 import * as Font from 'expo-font';
 import { PodcastPlaylist } from '../constants/PodcastPlaylist';
 import styles from '../styles/styles';
+import theme from '../styles/Theme';
 
 
 //const {width, height} = Dimensions.get('window');
@@ -245,22 +246,23 @@ class RadioPlayer extends Component {
 			<View />
 		) : (
 			<SafeAreaView style={styles.containerPlayer}>
-				<View style={styles.imageContainer}>
+				<View style={styles.radioheader}>
+				<Text style={[styles.epTitle]}>
+						{this.state.playbackInstanceTitle}
+					</Text>
+				</View>
+					<View style={styles.imageContainer}>
 					<Image
-						style={styles.image}
+						style={styles.imagess}
 						source={{
 						uri: this.state.image,
 						}}
 					/>
-				</View>
+					</View>
 				<View style={styles.detailsContainer}>
-					<Text style={[styles.text]}>
-						{this.state.playbackInstanceTitle}
-					</Text>
 					<Text style={[styles.text]}>
 						{this.state.playbackInstanceAuthor}
 					</Text>
-				
 				</View>
 				<View
 					style={[
@@ -279,8 +281,9 @@ class RadioPlayer extends Component {
 						onSlidingComplete={this._onSeekSliderSlidingComplete}
 						thumbStyle={ styles.sliderThumb }
 						trackStyle={ styles.sliderTrack }
-						minimumTrackTintColor="#EA5A00"
-						maximumTrackTintColor="#f0cbb4"
+						minimumTrackTintColor= "#FFB594"
+						maximumTrackTintColor= "#FFB594"
+						thumbTintColor='#F5620E'
 						disabled={this.state.isLoading}
 					/>
 				</View>

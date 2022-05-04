@@ -30,20 +30,38 @@ export default StyleSheet.create({
     //alignSelf: 'stretch',
     backgroundColor: "white",
   },
-  imageContainer: {
-    width: 300,
-    height: 340,
-    marginBottom: 25,
+
+  radioheader: {
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 2,
+    width: "100%",
+    alignItems: 'center',
+    height: 40,
   },
-  image: {
+  epTitle: {
+      fontSize: 25,
+      justifyContent: "center",
+      alignItems: "center",
+      color: "black",
+      fontWeight: 'normal',
+    },
+
+  imageContainer: {
+    width: 350,
+    height: 340,
+    marginTop: 20,
+  },
+  imagess: {
     width: "100%",
     height: "100%",
     borderRadius: 15,
+    alignSelf: 'stretch',
   },
   detailsContainer: {
-    height: 130,
-    marginTop: 10,
+    //height: 20,
+    marginTop: 20,
     alignItems: "center",
+    marginBottom: 20,
   },
   playbackContainer: {
     flex: 1,
@@ -56,18 +74,21 @@ export default StyleSheet.create({
     alignSelf: "stretch",
     marginLeft: 10,
     marginRight: 10,
+    
   },
   timeStamp: {
     flex: 1,
-    width: "80%",
+    width: "89%",
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom: 19,
   },
+
+  
 
   text: {
     fontSize: 16,
     minHeight: 16,
-    marginBottom: 20,
     justifyContent: "center",
     alignItems: "center",
     color: "black",
@@ -80,8 +101,6 @@ export default StyleSheet.create({
     borderRadius: 10 / 2,
   },
   sliderTrack: {
-    height: 2,
-
     shadowColor: "#ccc",
     shadowOffset: {
       width: 0,
@@ -94,8 +113,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 15,
     width: "80%",
+    marginBottom: 20,
   },
   bottomSection: {
     borderTopColor: "#F4EEEA",
@@ -298,5 +317,12 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingTop: 10,
     paddingRight: 5,
+  },
+  episodeDl: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  dlBtn: {
+    color: 'black',
   },
 });
