@@ -253,7 +253,7 @@ class RadioPlayer extends Component {
 				</View>
 					<View style={styles.imageContainer}>
 					<Image
-						style={styles.imagess}
+						style={styles.imagesss}
 						source={{
 						uri: this.state.image,
 						}}

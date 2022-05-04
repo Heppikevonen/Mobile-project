@@ -51,7 +51,7 @@ export default StyleSheet.create({
     height: 340,
     marginTop: 20,
   },
-  imagess: {
+  imagesss: {
     width: "100%",
     height: "100%",
     borderRadius: 15,
