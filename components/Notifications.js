@@ -26,7 +26,7 @@ async function saveToken() {
 
     db.ref('/tokens').orderByChild('token').equalTo(token).once('value', snapshot => {
         if (snapshot.exists()) {
-            console.log(snapshot.val());    
+            //console.log(snapshot.val());    
         }
         else {
             db.ref('/tokens').push({

@@ -318,4 +318,8 @@ export default StyleSheet.create({
     paddingTop: 10,
     paddingRight: 5,
   },
+  episodeDlContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });
