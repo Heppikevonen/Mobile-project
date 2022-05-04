@@ -25,6 +25,7 @@ const tabOptionsStyle = {
   tabBarLabelStyle: { paddingBottom: 10, color: theme.colors.onSurface },
   tabBarActiveBackgroundColor: theme.colors.surfaceVariant,
   headerShown: false,
+  tabBarHideOnKeyboard: true,
 };
 
 const StackNavigator = () => {

@@ -1,10 +1,4 @@
-import {
-  View,
-  Image,
-  BackHandler,
-  Pressable,
-  ScrollView
-} from 'react-native'
+import { View, Image, BackHandler, Pressable, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {
   Provider as PaperProvider,
@@ -16,11 +10,25 @@ import { Col, Row, Grid } from 'react-native-easy-grid'
 import theme from '../styles/Theme'
 import styles from '../styles/styles'
 import EpisodeList from '../components/EpisodeList'
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function PodcastReview ({ route, navigation }) {
   const { image, description, items } = route.params
   const [showMore, setShowMore] = useState(false)
   const DATA = items
+  const [orderByopen, setOrderByOpen] = useState(false);
+  const [orderByvalue, setOrderByValue] = useState(null);
+  const [orderByItems, setOrderByItems] = useState([
+    {label: 'Downloaded', value: 'downloaded'},
+    {label: 'Newest first', value: 'newest'},
+    {label: 'Oldest first', value: 'oldest'}
+  ]);
+  const [durationOpen, setDurationOpen] = useState(false);
+  const [durationValue, setDurationValue] = useState(null);
+  const [durationItems, setDurationItems] = useState([
+    {label: 'Apple', value: 'apple'},
+    {label: 'Banana', value: 'banana'}
+  ]);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', close)
@@ -35,15 +43,11 @@ export default function PodcastReview ({ route, navigation }) {
   }
 
 
-  function dateFormat(date) {
-
-  }
-
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
         <Grid>
-          <Row style={styles.podcastHeader}>
+          <Row style={styles.podcastHeader} size={30}>
             <Col>
               <Image style={styles.podcastImage} source={{ uri: image }} />
             </Col>
@@ -62,14 +66,16 @@ export default function PodcastReview ({ route, navigation }) {
                     </Pressable>
                   </>
                 ) : (
-                  <Text>{!showMore ? description.substring(0, 175) : null}</Text>
+                  <Text>
+                    {!showMore ? description.substring(0, 175) : null}
+                  </Text>
                 )}
               </Text>
             </Col>
           </Row>
           {showMore ? (
-            <Row>
-              <ScrollView>
+            <Row size={40}>
+              <ScrollView style={styles.descriptionScroll}>
                 <Col>
                   <Text style={styles.descriptionText}>
                     {description}
@@ -86,7 +92,30 @@ export default function PodcastReview ({ route, navigation }) {
               </ScrollView>
             </Row>
           ) : null}
-          <Row>
+          <Row size={10}>
+            <Col size={45}>
+              <DropDownPicker
+                open={orderByopen}
+                value={orderByvalue}
+                items={orderByItems}
+                setOpen={setOrderByOpen}
+                setValue={setOrderByValue}
+                setItems={setOrderByItems}
+              />
+            </Col>
+            <Col size={10} />
+            <Col size={45}>
+              <DropDownPicker
+                open={durationOpen}
+                value={durationValue}
+                items={durationItems}
+                setOpen={setDurationOpen}
+                setValue={setDurationValue}
+                setItems={setDurationItems}
+              />
+            </Col>
+          </Row>
+          <Row size={showMore ? 25 : 50}>
             <Col>
               <EpisodeList data={DATA} initialNumToRender={5} />
             </Col>

@@ -51,7 +51,7 @@ export default StyleSheet.create({
     height: 340,
     marginTop: 20,
   },
-  imagesss: {
+  imagess: {
     width: "100%",
     height: "100%",
     borderRadius: 15,
@@ -189,7 +189,12 @@ export default StyleSheet.create({
     height: 200,
   },
   descriptionText: {
+    // marginTop: 5,
+    // marginBottom: 5,
+  },
+  descriptionScroll: {
     marginTop: 5,
+    marginBottom: 10
   },
   smallDescription: {
     marginLeft: 10,
