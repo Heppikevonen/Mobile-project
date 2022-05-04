@@ -62,6 +62,13 @@ class RadioPlayer extends Component {
 		})();
 
 		this._loadNewPlaybackInstance(false);
+		// this.setState({episode: props.route.params.episode})
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.route.params.episode !== prevProps.route.params.episode) {
+			this.setState({episode: this.props.route.params.episode});
+		}
 	}
 
 	componentWillUnmount() {
