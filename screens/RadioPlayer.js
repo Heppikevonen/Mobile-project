@@ -36,6 +36,7 @@ class RadioPlayer extends Component {
 			volume: 1.0,
 			rate: 1.0,
 			image: null,
+			episode: props.route.params.episode
 		};
 	}
 
@@ -61,11 +62,11 @@ class RadioPlayer extends Component {
 		// this.setState({episode: props.route.params.episode})
 	}
 
-	componentDidUpdate(prevProps) {
-		if (this.props.route.params.episode !== prevProps.route.params.episode) {
-			this.setState({episode: this.props.route.params.episode});
-		}
-	}
+	// componentDidUpdate(prevProps) {
+	// 	if (this.props.route.params.episode !== prevProps.route.params.episode) {
+	// 		this.setState({episode: this.props.route.params.episode});
+	// 	}
+	// }
 
 	componentWillUnmount() {
 		this.playbackInstance.unloadAsync();

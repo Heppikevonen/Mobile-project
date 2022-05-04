@@ -5,8 +5,11 @@ import XDate from 'xdate'
 import { Divider, Text } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import RNFetchBlob from 'rn-fetch-blob'
+import {useNavigation} from '@react-navigation/native'
 
 export default function EpisodeList ({ data, initialNumToRender }) {
+
+  const navigation = useNavigation()
 
   function durationFormatter (duration) {
     if (duration.length < 6) {
@@ -55,7 +58,10 @@ config(options).fetch('GET', dlLink)
               <Text style={styles.episodeName}>
                 {item.title.substring(0, 35)}...
               </Text>
-              <TouchableHighlight onPress={()=>{download(item.title, item.enclosures[0].url)}}>
+              <TouchableHighlight onPress={()=>{
+                download(item.title, item.enclosures[0].url)
+                navigation.navigate('Player', {episode: item.enclosures[0].url})
+                }}>
                 <Icon name='download-circle-outline' size={35} color='black'></Icon>
               </TouchableHighlight>
               </View>
