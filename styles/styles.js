@@ -322,4 +322,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  textInputDuration: {
+    marginTop: 10,
+  }, 
+  dropDownPodcastReview: {
+    marginTop: 20, 
+    height: 300,
+  }
 });

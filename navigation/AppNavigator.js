@@ -97,7 +97,7 @@ const AppNavigator = () => {
         name="HomeTab"
         component={HomeStackNavigator}
         options={{
-          tabBarIcon: (color) => <Entypo name="home" size={24} color={color} />,
+          tabBarIcon: (color) => <Ionicons name="home" size={24} color={color} />,
           tabBarLabel: "Home",
         }}
       />
@@ -105,7 +105,7 @@ const AppNavigator = () => {
         name="Player"
         component={RadioPlayer}
         options={{
-          tabBarIcon: (color) => <Entypo name="home" size={24} color={color} />,
+          tabBarIcon: (color) => <Ionicons name="play" size={24} color={color} />,
         }}
       />
       <Tab.Screen

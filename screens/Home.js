@@ -14,12 +14,8 @@ export default function Home({navigation}) {
     const [header, setHeader] = useState([]); 
 
     const handlePress = () => setExpanded(!expanded);
-
-    const image = { uri: "https://runner-radio.de/wp-content/uploads/2022/02/one-run-one-book.jpg" };
-    const image2 = { uri: "https://runner-radio.de/wp-content/uploads/2022/02/strandlauf.jpg" };
-    const headerImage = require('../assets/images/header.jpg'); 
-    const logo = require('../assets/images/logo.png'); 
     
+    const headerImage = require('../assets/images/header.jpg');     
 
     useEffect(() => {
       db.ref(ROOT_REF_NEWS).on('value', querySnapShot => {
