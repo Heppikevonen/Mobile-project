@@ -57,13 +57,13 @@ const SongRequest = () => {
   let allFields = firstName.trim() && lastName.trim() && email.trim() && songName.trim() && reason.trim() !== "";
 
     if(validMail && allFields) {
-//    db.ref(ROOT_REF_SONG_REQUESTS).push({
-//            Firstname: firstName,
-//            Lastname: lastName,
-//            Email: email,
-//            Songname: songName,
-//            Reason: reason,
-//    });
+    db.ref(ROOT_REF_SONG_REQUESTS).push({
+            Firstname: firstName,
+            Lastname: lastName,
+            Email: email,
+            Songname: songName,
+            Reason: reason,
+    });
         setFirstName('');
         setLastName('');
         setEmail('');
