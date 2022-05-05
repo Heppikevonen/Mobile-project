@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, ScrollView, Alert, Modal, Pressable, Platform } from 'react-native';
+import { Text, View, ScrollView, Alert, Modal, Pressable, ToastAndroid } from 'react-native';
 import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-native-paper';
 import styles from '../styles/styles';
 import theme from '../styles/Theme';
@@ -49,65 +49,47 @@ const SongRequest = () => {
   const [email, setEmail] = useState('');
   const [songName, setSongName] = useState('');
   const [reason, setReason] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
-  const submit = () => {
-    if(firstName.trim() && lastName.trim() && email.trim() && songName.trim() && reason.trim() !== ""  ) {
-    db.ref(ROOT_REF_SONG_REQUESTS).push({
-            Firstname: firstName,
-            Lastname: lastName,
-            Email: email,
-            Songname: songName,
-            Reason: reason,
-    });
-    setFirstName('');
-    setLastName('');
-    setEmail('');
-    setSongName('');
-    setReason('');
-    Alert.alert(
-      "Thank you!",
-      "Your song request has been successfully submitted. If it fits the show, you might hear it soon. Stay tuned and keep running :)",
-      [
-        { text: "OK" }
-      ]
-    );
-  } else {
-    Alert.alert(
-      "Missing information",
-      "There are some necessary information missing. Please check the form again!",
-      [
-        { text: "OK", colors: 'orange' }
-      ]
-    );
+  function submit (){
+  let validMail = valid();
+  let allFields = firstName.trim() && lastName.trim() && email.trim() && songName.trim() && reason.trim() !== "";
 
-  }
-};
+    if(validMail && allFields) {
+//    db.ref(ROOT_REF_SONG_REQUESTS).push({
+//            Firstname: firstName,
+//            Lastname: lastName,
+//            Email: email,
+//            Songname: songName,
+//            Reason: reason,
+//    });
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setSongName('');
+        setReason('');
+        setErrorMessage('');
+        ToastAndroid.show("You've submitted a songrequest! Stay tuned and keep running :)", ToastAndroid.LONG);
+    } else if (!allFields) {
+        setErrorMessage("There is some information missing. Please fill in all the fields!")
+        setModalVisible(true);
+    } else if (!validMail){
+        setModalVisible(true);
+    }
+  return true;
+  };
 
+  function valid() {
+     let val = email;
+     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
- const validate = val => {
-  console.log(val);
-  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-
-  if (val.length === 0) {
-    Alert.alert(
-      "Email address must be entered",
-      "Please fill in your email address",
-      [
-        { text: "OK" }
-      ]
-    );
-  } else if (reg.test(val) === false) {
-    Alert.alert(
-      "Invalid Email",
-      "Please enter a valid email address",
-      [
-        { text: "OK" }
-      ]
-    );
-  } else if (reg.test(val) === true) {
-    setEmail(val);
-  }
+     if (reg.test(val) === false) {
+         setErrorMessage("Please enter a valid email address");
+         return false;
+     } else if (reg.test(val) === true) {
+         return true;
+     }
   };
 
   return (
@@ -118,7 +100,7 @@ const SongRequest = () => {
         <CustomAlert
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
-            message={"Error message"}
+            message={errorMessage}
         />
 
           <Text style={[styles.textLargeLabel, { alignSelf: "center" }]}>
@@ -137,10 +119,6 @@ const SongRequest = () => {
             onChangeText={setFirstName}
             style={styles.textInput}
             right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setFirstName('')} />}
-            // right={<TextInput.Icon name={<AntDesign name="closecircleo"/>} onPress={() => setFirstName('')} />}
-            // <AntDesign name="closecircleo" size={24} color="black" />
-
-
           />
           <TextInput
             label="Last name"
@@ -157,9 +135,6 @@ const SongRequest = () => {
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
-            // onSubmitEditing={value =>
-            //   validate(value)
-            // }
             style={styles.textInput}
             right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setEmail('')} />}
           />
@@ -186,7 +161,7 @@ const SongRequest = () => {
           <Pressable
             mode="contained"
             style={[styles.buttonSmall, {alignSelf: 'center', marginBottom: 30}]}
-            onPress={()=> setModalVisible(true)}
+            onPress={submit}
           >
             <Text style={styles.alertSubmitText}>Submit</Text>
           </Pressable>
