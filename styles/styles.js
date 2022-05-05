@@ -158,7 +158,7 @@ export default StyleSheet.create({
     backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: theme.colors.neutral80,
   },
   textStyle: {
     color: "white",
@@ -389,5 +389,19 @@ export default StyleSheet.create({
     alignSelf: 'center',
     fontSize: 20,
     textTransform: 'uppercase',
+  }, 
+  buttonVote: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 30,
+    backgroundColor: theme.colors.neutral80,
+  }, 
+  buttonVoted: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 30,
+    backgroundColor: theme.colors.primary,
   }
 });

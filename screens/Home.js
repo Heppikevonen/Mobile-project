@@ -4,6 +4,7 @@ import { Provider as PaperProvider, useTheme, List, Divider, Button } from 'reac
 import styles from '../styles/styles'
 import theme from '../styles/Theme'
 import { db, ROOT_REF_NEWS, ROOT_REF_UPCOMING_BROADCASTS, ROOT_REF_HEADER } from '../firebase/Config'
+import Poll from "./Poll"
 
 export default function Home({navigation}) {
   
@@ -35,6 +36,10 @@ export default function Home({navigation}) {
       );
     }, []);
 
+    // const openPoll = () => {
+    //   return <Poll></Poll>
+    // }
+
   let keyNews = Object.keys(news);
   let keyUpcomingBroadcasts = Object.keys(upcomingBroadcasts);
   
@@ -59,6 +64,7 @@ export default function Home({navigation}) {
             </Button>
            </ImageBackground>
            <ScrollView>
+           
         <List.Section title="Upcoming broadcasts" titleStyle={[styles.textAccordion, {color: colors.text}]}>
         {keyUpcomingBroadcasts.length > 0 ? (
           keyUpcomingBroadcasts.map(key => (
@@ -81,12 +87,14 @@ export default function Home({navigation}) {
         )}
           </List.Section>
 
-          <List.Section title="News" titleStyle={[styles.textAccordion, {color: colors.text}]}>         
+          <List.Section title="News" titleStyle={[styles.textAccordion, {color: colors.text}]}> 
+                  
           {keyNews.length > 0 ? (
           keyNews.map(key => (
             <List.Accordion
             key={key}
             id={key}
+            theme={{colors: {background: colors.surface}}}
             titleNumberOfLines={news[key].titleNumberOfLines}
             title={news[key].title}
             description={news[key].description}
@@ -95,7 +103,10 @@ export default function Home({navigation}) {
             >
             <List.Item 
                 titleNumberOfLines={news[key].itemNumberOfLines}
-                title={news[key].detailedDescription} />
+                title={news[key].detailedDescription}
+                description={news[key].poll ? <Poll></Poll> : ''}
+                
+                 />
             </List.Accordion>
           
           ))

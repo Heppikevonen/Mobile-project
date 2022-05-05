@@ -10,35 +10,52 @@ import {
 } from 'react-native'
 import RNPoll from 'react-native-poll'
 import RNAnimated from 'react-native-animated-component'
-import { db, POLL_REF } from '../firebase/Config'
+import { db, ROOT_REF_POLL1, ROOT_REF_POLL1_RESULTS } from '../firebase/Config'
 import styles from '../styles/styles'
+import theme from '../styles/Theme'
 
 const { width: ScreenWidth } = Dimensions.get('window')
 
-var choices = [
-  { id: 1, choice: 'Rock', votes: 17 },
-  { id: 2, choice: 'Pop', votes: 7 },
-  { id: 3, choice: 'Metal', votes: 1 },
-  { id: 4, choice: 'Rap', votes: 5 },
-  { id: 5, choice: 'Bad', votes: 9 }
-]
+
 
 export default function Poll () {
   const [modalVisible, setModalVisible] = useState(false)
-  // const [pollData, setPollData] = useState({})
+  const [pollData, setPollData] = useState([]);
+  const [choices, setChoices] = useState([]);
+  const [userChoice, setUserChoice] = useState([]);
+  const [voted, setVoted] = useState(false); 
+  let vote1 = 0; 
 
-  // useEffect(() => {
-  //   db.ref(POLL_REF).on('value', querySnapShot => {
-  //   let data = querySnapShot.val() ? querySnapShot.val() : {}
-  //   let poll = {...data}
-  //   setPollData(poll)
-  //   console.log(data)
-  //   })
-  // }, [])
+  //let choices = []
+
+  useEffect(() => {
+    db.ref(ROOT_REF_POLL1).on('value', querySnapShot => {
+      let data = querySnapShot.val() ? querySnapShot.val() : {};
+      setPollData(data);
+  
+      setChoices( [
+        { id: 1, choice: data.answer1, votes: 5 },
+        { id: 2, choice: data.answer2, votes: 7 },
+        { id: 3, choice: data.answer3, votes: 1 },
+        { id: 4, choice: data.answer4, votes: 5 },
+        { id: 5, choice: data.answer5, votes: 9 }
+      ])
+      
+    }
+    );
+  }, [])
+
+  const sendChoiceToDB = (choice) => {
+    db.ref(ROOT_REF_POLL1_RESULTS).push({
+      choice: choice.choice,
+});
+  }
+
+
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
       <Pressable
-        style={[styles.button, styles.buttonOpen]}
+        style={styles.buttonSmall}
         onPress={() => setModalVisible(true)}
       >
         <Text style={styles.textStyle}>Show poll</Text>
@@ -53,14 +70,30 @@ export default function Poll () {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text
+            {voted ? (
+              <>
+              <Text
               style={{
                 marginTop: 32,
                 fontSize: 20,
                 fontFamily: 'sans-serif'
               }}
             >
-              What type of music do you like?
+              Thanks for having participated in the survey! 
+              
+            </Text>
+            <Text style={{marginTop: 10, fontSize: 16, fontFamily: 'sans-serif' }}>Your choice for the question "{pollData.question}" was: {userChoice.choice}</Text>
+            </>
+            ) : (
+              <>
+              <Text
+              style={{
+                marginTop: 32,
+                fontSize: 20,
+                fontFamily: 'sans-serif'
+              }}
+            >
+              {pollData.question}
             </Text>
             <RNPoll
               appearFrom='top'
@@ -73,14 +106,16 @@ export default function Poll () {
                 fontFamily: 'sans-serif'
               }}
               onChoicePress={selectedChoice =>
-                console.log('SelectedChoice: ', selectedChoice)
+                {setUserChoice(selectedChoice); sendChoiceToDB(selectedChoice); setVoted(true)}
               }
             />
+            </>
+            )}
             <Pressable
-              style={[styles.button, styles.buttonClose]}
+              style={voted? styles.buttonVoted : styles.buttonVote}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle}>Hide survey</Text>
             </Pressable>
           </View>
         </View>

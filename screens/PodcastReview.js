@@ -62,13 +62,13 @@ export default function PodcastReview ({ route, navigation }) {
     if (value === '') {
       setDataSearch(data); 
       setOrderByValue('newest');
-    } else if (dataSearch[0].itunes.duration.includes(':') === false){
-      const dataDuration = dataSearch.filter(item => Math.round(item.itunes.duration / 60) >= value) 
+    } else if (data[0].itunes.duration.includes(':') === false){
+      const dataDuration = data.filter(item => Math.round(item.itunes.duration / 60) >= value) 
         .map((items) => (items));
       setDataSearch(dataDuration); 
       sortByDate;
-    } else if (dataSearch[0].itunes.duration.length < 6) {
-      const dataDuration = dataSearch.filter(item => 
+    } else if (data[0].itunes.duration.length < 6) {
+      const dataDuration = data.filter(item => 
           Math.round(
             parseInt(item.itunes.duration.substring(0, 2)) + 
             parseInt(item.itunes.duration.substring(3, 4) / 60)) >= value) 
@@ -76,7 +76,7 @@ export default function PodcastReview ({ route, navigation }) {
       setDataSearch(dataDuration); 
       sortByDate;
        } else {
-        const dataDuration = dataSearch.filter(item => 
+        const dataDuration = data.filter(item => 
           Math.round(
             parseInt(item.itunes.duration.substring(0, 2)) * 60 + 
             parseInt(item.itunes.duration.substring(3, 5)) +
