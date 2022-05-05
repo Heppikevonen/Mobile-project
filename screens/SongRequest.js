@@ -186,11 +186,9 @@ const SongRequest = () => {
           <Pressable
             mode="contained"
             style={[styles.buttonSmall, {alignSelf: 'center', marginBottom: 30}]}
-            //icon='submit'
             onPress={()=> setModalVisible(true)}
-//            dark={true}
           >
-            <Text>Submit</Text>
+            <Text style={styles.alertSubmitText}>Submit</Text>
           </Pressable>
         </ScrollView>
       </View>

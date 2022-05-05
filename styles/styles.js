@@ -371,8 +371,7 @@ export default StyleSheet.create({
   alertButtonContainer: {
     marginTop: 0,
     marginRight: 0,
-    marginBottom: 8,
-    marginLeft: 24,
+    marginBottom: 16,
     flexDirection: 'row',
   },
   alertButtonBox: {
@@ -384,5 +383,11 @@ export default StyleSheet.create({
     padding: 10,
     backgroundColor: theme.colors.error,
     borderRadius: 20,
+  },
+  alertSubmitText: {
+    color: theme.colors.onPrimary,
+    alignSelf: 'center',
+    fontSize: 20,
+    textTransform: 'uppercase',
   }
 });
