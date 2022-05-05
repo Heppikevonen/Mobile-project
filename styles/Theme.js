@@ -10,7 +10,6 @@ const theme = {
     primary: "#F5620E",
     secondary: "#31A54E",
     accent: "#373F41",
-    text: "#737B7D",
     onSurface: "#191C1D",
     onSurfaceVariant: "#52433E",
     onPrimaryContainer: "#370E00",

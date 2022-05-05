@@ -328,6 +328,67 @@ export default StyleSheet.create({
   dropDownPodcastReview: {
     marginTop: 20, 
     height: 300,
+  },
+  alertBackdrop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: theme.colors.surface,
+    opacity: 0.5
+  },
+  alertContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+  },
+  alertBox: {
+    maxWidth: 280,
+    width: '100%',
+    margin: 48,
+    elevation: 24,
+    backgroundColor: theme.colors.errorContainer,
+    borderColor: theme.colors.error,
+    borderWidth: 4,
+    borderRadius: 12
+  },
+  alertTitle: {
+    margin: 24,
+    color: theme.colors.onSurface,
+    fontSize: 22,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+  },
+  alertMessage: {
+    marginLeft: 24,
+    marginRight: 24,
+    marginBottom: 24,
+    color: theme.colors.onSurface,
+    fontSize: 15,
+    alignSelf: 'center',
+  },
+  alertButtonContainer: {
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 16,
+    flexDirection: 'row',
+  },
+  alertButtonBox: {
+    marginTop: 12,
+    marginRight: 8,
+    flex: 1,
+  },
+  alertCloseButton: {
+    padding: 10,
+    backgroundColor: theme.colors.error,
+    borderRadius: 20,
+  },
+  alertSubmitText: {
+    color: theme.colors.onPrimary,
+    alignSelf: 'center',
+    fontSize: 20,
+    textTransform: 'uppercase',
   }, 
   buttonVote: {
     borderRadius: 20,
