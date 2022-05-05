@@ -36,7 +36,7 @@ class RadioPlayer extends Component {
 			volume: 1.0,
 			rate: 1.0,
 			image: null,
-			episode: props.route.params.episode
+			// episode: props.route.params.episode
 		};
 	}
 
