@@ -1,11 +1,45 @@
 import React, { useState } from 'react';
-import { Text, View, ScrollView, Alert } from 'react-native';
+import { Text, View, ScrollView, Alert, Modal, Pressable, Platform } from 'react-native';
 import { Provider as PaperProvider, Button, TextInput, useTheme } from 'react-native-paper';
 import styles from '../styles/styles';
 import theme from '../styles/Theme';
 import {db, ROOT_REF_SONG_REQUESTS} from '../firebase/Config';
 import { AntDesign } from '@expo/vector-icons';
 
+const CustomAlert = (props) => {
+    return (
+        <Modal
+           animationType='fade'
+           transparent={true}
+           visible={props.modalVisible}
+           onRequestClose={() => {
+              props.setModalVisible(!modalVisible);
+           }}
+        >
+        <Pressable style={styles.alertBackdrop} onPress={() => props.setModalVisible(false)} />
+            <View style={[styles.alertContainer]}>
+                <View style={styles.alertBox}>
+                    <Text style={styles.alertTitle}>{"Error"}</Text>
+                    <Text style={styles.alertMessage}>{props.message || ''}</Text>
+                    <View style={[styles.alertButtonContainer]}>
+                        <View style={styles.alertButtonBox}>
+                            <Pressable style={{ alignSelf: 'center'}} onPress={() => {props.setModalVisible(false)}}>
+                                <View style={styles.alertCloseButton}>
+                                    <Text style={{
+                                        color: theme.colors.onPrimary,
+                                        fontSize: 22,
+                                        fontWeight: '500',
+                                        }}
+                                    >Close</Text>
+                                </View>
+                            </Pressable>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        </Modal>
+    )
+}
 
 const SongRequest = () => {
 
@@ -15,6 +49,7 @@ const SongRequest = () => {
   const [email, setEmail] = useState('');
   const [songName, setSongName] = useState('');
   const [reason, setReason] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const submit = () => {
     if(firstName.trim() && lastName.trim() && email.trim() && songName.trim() && reason.trim() !== ""  ) {
@@ -71,34 +106,21 @@ const SongRequest = () => {
       ]
     );
   } else if (reg.test(val) === true) {
-    setEmail(val); 
+    setEmail(val);
   }
   };
-
-
-
-
-//   if (reg.test(text) === false) {
-//     console.log("Email is Not Correct");
-//     Alert.alert(
-//       "Invalid email",
-//       "Your email address is not correct. Please try it again.",
-//       [
-//         { text: "OK", onPress: () => console.log("OK Pressed") }
-//       ]
-//     );
-//     return false;
-//   }
-//   else {
-//     setEmail(text);
-//     console.log("Email is Correct");
-//   }
-// }
 
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
         <ScrollView>
+
+        <CustomAlert
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            message={"Error message"}
+        />
+
           <Text style={[styles.textLargeLabel, { alignSelf: "center" }]}>
             Do you want to hear a specific song on the show?
           </Text>
@@ -117,8 +139,8 @@ const SongRequest = () => {
             right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setFirstName('')} />}
             // right={<TextInput.Icon name={<AntDesign name="closecircleo"/>} onPress={() => setFirstName('')} />}
             // <AntDesign name="closecircleo" size={24} color="black" />
-            
-            
+
+
           />
           <TextInput
             label="Last name"
@@ -127,6 +149,7 @@ const SongRequest = () => {
             value={lastName}
             onChangeText={setLastName}
             style={styles.textInput}
+            right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setLastName('')} />}
           />
           <TextInput
             label="Email address"
@@ -134,10 +157,11 @@ const SongRequest = () => {
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
-            // onSubmitEditing={value => 
+            // onSubmitEditing={value =>
             //   validate(value)
             // }
             style={styles.textInput}
+            right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setEmail('')} />}
           />
           <TextInput
             label="Songname and artist"
@@ -146,6 +170,7 @@ const SongRequest = () => {
             value={songName}
             onChangeText={setSongName}
             style={styles.textInput}
+            right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setSongName('')} />}
           />
           <TextInput
             label="Reason for song"
@@ -154,18 +179,19 @@ const SongRequest = () => {
             value={reason}
             onChangeText={setReason}
             style={styles.textInput}
-            //multiline='true'
-            numberOfLines={5}
+            multiline
+            numberOfLines={6}
+            right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setFirstName('')} />}
           />
-          <Button
+          <Pressable
             mode="contained"
             style={[styles.buttonSmall, {alignSelf: 'center', marginBottom: 30}]}
             //icon='submit'
-            onPress={submit}
-            dark={true}
+            onPress={()=> setModalVisible(true)}
+//            dark={true}
           >
-            Submit
-          </Button>
+            <Text>Submit</Text>
+          </Pressable>
         </ScrollView>
       </View>
     </PaperProvider>
@@ -173,7 +199,3 @@ const SongRequest = () => {
 }
 
 export default SongRequest
-
-
-
-
