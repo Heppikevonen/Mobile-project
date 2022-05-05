@@ -158,7 +158,7 @@ export default StyleSheet.create({
     backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: theme.colors.neutral80,
   },
   textStyle: {
     color: "white",
@@ -328,5 +328,19 @@ export default StyleSheet.create({
   dropDownPodcastReview: {
     marginTop: 20, 
     height: 300,
+  }, 
+  buttonVote: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 30,
+    backgroundColor: theme.colors.neutral80,
+  }, 
+  buttonVoted: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 30,
+    backgroundColor: theme.colors.primary,
   }
 });

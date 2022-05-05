@@ -17,3 +17,5 @@ export const ROOT_REF_SONG_REQUESTS = '/songRequests';
 export const ROOT_REF_NEWS = '/news';
 export const ROOT_REF_UPCOMING_BROADCASTS ='/upcomingBroadcasts';
 export const ROOT_REF_HEADER = '/header';
+export const ROOT_REF_POLL1 = '/polls/poll1';
+export const ROOT_REF_POLL1_RESULTS = '/polls/poll1/results';
