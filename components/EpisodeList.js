@@ -28,7 +28,7 @@ export default function EpisodeList ({ data, initialNumToRender }) {
   
   function download(dlTitle, dlLink) {
     const { config, fs } = RNFetchBlob;
-    let dlDir = fs.dirs.DownloadDir + '/' + dlTitle + '.mp3';
+    let dlDir = fs.dirs.DownloadDir + '/' + 'title' + '.mp3';
     let options = {
       fileCache: true,
       addAndroidDownloads : {
