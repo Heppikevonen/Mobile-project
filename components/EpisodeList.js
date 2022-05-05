@@ -1,4 +1,4 @@
-import { View, FlatList, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { View, FlatList, TouchableOpacity, TouchableHighlight, PermissionsAndroid, Platform } from 'react-native'
 import styles from '../styles/styles'
 import React from 'react'
 import XDate from 'xdate'
@@ -41,7 +41,7 @@ export default function EpisodeList ({ data, initialNumToRender }) {
 
 config(options).fetch('GET', dlLink)
 .then((res) => {
-  console.log(options)
+  console.log(dlDir)
 })
   }
 
@@ -52,7 +52,9 @@ config(options).fetch('GET', dlLink)
         data={data}
         initialNumToRender={initialNumToRender}
         renderItem={({ item }) => (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>{
+            navigation.navigate('Player', {episode: item.enclosures[0].url})  
+          }}>
             <View style={styles.listItem}>
             <View style={styles.episodeDlContainer}>  
               <Text style={styles.episodeName}>
@@ -60,7 +62,6 @@ config(options).fetch('GET', dlLink)
               </Text>
               <TouchableHighlight onPress={()=>{
                 download(item.title, item.enclosures[0].url)
-                navigation.navigate('Player', {episode: item.enclosures[0].url})
                 }}>
                 <Icon name='download-circle-outline' size={35} color='black'></Icon>
               </TouchableHighlight>
