@@ -10,6 +10,7 @@ import theme from '../styles/Theme';
 import Search from '../components/Search';
 import DropDown from "react-native-paper-dropdown";
 import DropDownPicker from 'react-native-dropdown-picker';
+import { MaterialIcons, Ionicons, Entypo } from "@expo/vector-icons";
 
 //import DataRSSFeed from '../constants/DataRSSFeed';
 
@@ -31,10 +32,10 @@ export default function PodcastOverview({ navigation }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const [filterList, setFilterList] = useState([
-    { label: 'Books', value: 'books' },
-    { label: 'Education', value: 'education' },
-    { label: 'Sports', value: 'sports' },
-    { label: 'Music', value: 'music' },
+    { label: 'Books', value: 'books',  icon: () => <Ionicons name="book-outline" size={24} color={colors.accent} /> },
+    { label: 'Education', value: 'education', icon: () => <Ionicons name="school-outline" size={24} color={colors.accent} /> },
+    { label: 'Sports', value: 'sports', icon: () => <Ionicons name="basketball-outline" size={24} color={colors.accent} /> },
+    { label: 'Music', value: 'music', icon: () => <Ionicons name="musical-note-outline" size={24} color={colors.accent} /> },
   ]);
 
   const [orderByList, setOrderByList] = useState([
@@ -185,6 +186,7 @@ export default function PodcastOverview({ navigation }) {
                   setValue={setFilter}
                   setItems={setFilterList}
                   onChangeValue={executeFilter}
+                  placeholder="Filter by category"
                 />
               </View>
             </Col>
