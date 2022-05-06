@@ -156,7 +156,7 @@ const SongRequest = () => {
             style={styles.textInput}
             multiline
             numberOfLines={6}
-            right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setFirstName('')} />}
+            right={<TextInput.Icon name={() => <AntDesign name="closecircleo" size={24} color={colors.onSurface}/>}  onPress={() => setReason('')} />}
           />
           <Pressable
             mode="contained"
